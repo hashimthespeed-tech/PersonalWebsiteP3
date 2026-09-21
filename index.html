@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jordan Ellis is a digital storyteller, community builder, and curious maker.">
+  <title>Jordan Ellis — Digital storyteller</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+  <header class="site-header">
+    <a class="wordmark" href="index.html"><span class="wordmark-mark"></span> Jordan Ellis</a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a class="active" href="index.html">Home</a><a href="media.html">Media</a><a href="future.html">Future</a><a href="creative-coding.html">Making</a><a href="community.html">Community</a><a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Digital storyteller · curious maker</p>
+        <h1>Make room <span>for wonder.</span></h1>
+        <p class="lead">Hi, I’m Jordan — a student, creative technologist, and collector of small moments that turn into big ideas.</p>
+        <div class="hero-actions"><a class="button" href="#contact">Say hello <span>↗</span></a><a class="button secondary" href="media.html">See the archive</a></div>
+        <div class="hero-note"><span class="hero-note-dot"></span><p>Currently learning in Los Angeles, CA</p></div>
+      </div>
+      <div class="portrait-wrap"><img class="portrait" src="assets/jordan-portrait.svg" alt="Illustrated portrait of Jordan Ellis"><span class="portrait-tag">nice to meet you!</span></div>
+    </section>
+
+    <section class="section sage-band">
+      <div class="container story-grid">
+        <div><p class="eyebrow">A short introduction</p><h2>People first,<br>always.</h2></div>
+        <div class="story-copy">
+          <p>I’m drawn to the space where technology feels human. I like asking questions, making things with my hands, and finding the story underneath the obvious one.</p>
+          <p>My work is a mix of design, code, photography, and conversation. Whether I’m building a small website or organizing a room full of strangers, I’m looking for the same thing: a way to make people feel invited.</p>
+          <div class="numbered-list">
+            <div class="numbered-item"><strong>01</strong><div><h3>Notice the details</h3><p>Good work starts with paying attention.</p></div></div>
+            <div class="numbered-item"><strong>02</strong><div><h3>Make it understandable</h3><p>Clarity is a form of care.</p></div></div>
+            <div class="numbered-item"><strong>03</strong><div><h3>Leave the door open</h3><p>The best ideas get better together.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header"><div><p class="eyebrow">Recent field notes</p><h2>A few things<br>I’ve been making.</h2></div><a class="text-link" href="media.html">View all media ↗</a></div>
+        <div class="mini-grid">
+          <article class="mini-card"><img src="assets/camera-walk.svg" alt="Jordan walking with a camera"><div class="mini-card-content"><h3>Walking with a camera</h3><p>A visual diary about noticing more.</p></div></article>
+          <article class="mini-card"><img src="assets/studio-table.svg" alt="Jordan at a creative studio table"><div class="mini-card-content"><h3>The making table</h3><p>Where half-finished ideas become real.</p></div></article>
+          <article class="mini-card"><img src="assets/jordan-portrait.svg" alt="Portrait of Jordan Ellis"><div class="mini-card-content"><h3>Five years out</h3><p>A plan with enough room to change.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-band" id="contact">
+      <div class="container contact-layout">
+        <div class="contact-meta"><div><p class="eyebrow">Open inbox</p><h2>Let’s make<br>something useful.</h2><p class="lead">Have a question, a good idea, or a reason to say hi? I’d love to hear it.</p></div><div class="contact-links"><a href="mailto:hello@jordanellis.example"><span>hello@jordanellis.example</span><span>↗</span></a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>↗</span></a></div></div>
+        <form class="contact-form" id="contactForm">
+          <div class="form-grid">
+            <div class="field"><label for="firstName">First name</label><input id="firstName" name="firstName" required></div>
+            <div class="field"><label for="lastName">Last name</label><input id="lastName" name="lastName" required></div>
+            <div class="field full"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+            <div class="field full"><label for="reason">Reason for contact</label><select id="reason" name="reason" required><option value="">Choose one</option><option>Comment</option><option>Question</option><option>Partnership</option><option>Opportunity</option><option>Other</option></select></div>
+            <div class="field full"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Write a little something…"></textarea></div>
+          </div>
+          <div class="form-footer"><p class="form-message" id="formMessage" aria-live="polite"></p><button class="button" type="submit">Send message ↗</button></div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><p>© 2026 Jordan Ellis. Made with intention.</p><div class="footer-links"><a href="media.html">Media</a><a href="future.html">Future</a><a href="admin.html">Admin</a></div></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>

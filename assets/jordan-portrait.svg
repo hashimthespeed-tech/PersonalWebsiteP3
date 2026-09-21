@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 860">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#d8e3d5"/><stop offset="1" stop-color="#8faa92"/></linearGradient>
+    <linearGradient id="shirt" x1="0" x2="1"><stop stop-color="#c66d4b"/><stop offset="1" stop-color="#8d493c"/></linearGradient>
+  </defs>
+  <rect width="720" height="860" fill="url(#bg)"/>
+  <circle cx="590" cy="130" r="110" fill="#f2ce71" opacity=".85"/>
+  <path d="M72 860c25-191 134-272 288-272s263 81 288 272" fill="url(#shirt)"/>
+  <ellipse cx="358" cy="363" rx="195" ry="230" fill="#c88866"/>
+  <path d="M170 350c-13-202 83-282 194-282 147 0 211 101 184 282l-39-66-44 38-47-103c-59 52-156 76-246 54z" fill="#253c37"/>
+  <path d="M217 420c25 95 82 146 142 146s119-51 144-146c-31 64-79 91-144 91s-111-27-142-91z" fill="#a56553"/>
+  <ellipse cx="287" cy="369" rx="13" ry="17" fill="#253c37"/><ellipse cx="438" cy="369" rx="13" ry="17" fill="#253c37"/>
+  <path d="M319 458c32 19 60 19 91 0" fill="none" stroke="#6f3e37" stroke-width="9" stroke-linecap="round"/>
+  <path d="M224 303c28-30 61-39 102-30" fill="none" stroke="#253c37" stroke-width="14" stroke-linecap="round"/>
+  <path d="M399 273c39-9 73 0 102 30" fill="none" stroke="#253c37" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="221" cy="426" r="16" fill="#f2ce71"/><circle cx="491" cy="426" r="16" fill="#f2ce71"/>
+  <text x="50" y="790" fill="#fcfaf4" font-family="Georgia,serif" font-size="28">JORDAN ELLIS</text>
+</svg>
