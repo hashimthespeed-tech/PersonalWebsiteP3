@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const hero = document.querySelector(".video-hero");
+  const heroVideo = document.querySelector(".hero-video");
+  const heroContent = document.querySelector(".video-hero-content");
+  if (hero && heroVideo && heroContent) {
+    const revealHeroText = () => {
+      hero.classList.add("revealed");
+      heroContent.setAttribute("aria-hidden", "false");
+    };
+    heroVideo.addEventListener("ended", revealHeroText, { once: true });
+    if (heroVideo.ended) revealHeroText();
+  }
+
   document.querySelectorAll(".media-card[data-media]").forEach((card) => {
     card.addEventListener("click", () => {
       const modal = document.querySelector("#mediaModal");
