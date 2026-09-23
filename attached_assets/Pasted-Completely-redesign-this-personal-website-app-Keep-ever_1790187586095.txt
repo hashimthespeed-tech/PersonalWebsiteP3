@@ -1,0 +1,52 @@
+Completely redesign this personal website app. Keep every required page, section, feature, and piece of content from my teacher’s specification, but replace the entire current visual design and remove the current hero video completely. Do not reuse, edit, autoplay, or leave a placeholder for that video.
+
+Design direction: create a premium, cinematic, editorial portfolio inspired by the feeling of landonorris.com—not a copy of its branding, imagery, content, or Formula 1 theme. The experience should feel confident, modern, personal, fast, and high-end.
+
+Visual system:
+
+* Use an Antigravity-style dark mode palette: near-black / charcoal background, slightly lighter dark-gray surfaces, cool muted white text, and restrained Antigravity-inspired purple/indigo accents. No bright orange, neon green, racing colors, or random gradients.
+* Make the website feel almost black at first glance, with depth created by subtle layers, thin borders, grain/noise texture, and soft glows—not large colorful cards.
+* Typography should be bold and editorial: an oversized condensed sans-serif for major titles/headlines, paired with a clean modern sans-serif or mono font for labels, dates, navigation, and metadata.
+* Use mostly lowercase utility labels and large, short, confident headlines. Strong spacing and intentional empty space are important.
+* Avoid the typical generic student portfolio look: no big rounded white cards, no excessive glassmorphism, no stock icons, no template-like gradients, and no overly bubbly buttons.
+
+Hero:
+
+* Replace the video with a full-screen, art-directed hero section.
+* Put my name or the main site title in huge typography as the focal point, with a short one-line personal statement underneath.
+* Add a subtle abstract background: dark textured grid, soft moving light, grain, tiny particles, or a blurred geometric 3D shape. It must stay understated and never compete with the text.
+* Include a small “scroll to explore” indicator and minimal navigation.
+* The hero should feel like an introduction to a person with ambition and direction, not a business landing page.
+
+Page layout:
+
+* Use full-width editorial sections instead of a collection of separate cards.
+* Turn each teacher-required section into a visually distinctive chapter with a small section number/label, a large title, concise supporting text, and carefully arranged content.
+* Use an asymmetrical grid: large text areas paired with smaller visual/info blocks, thin divider lines, controlled overlapping elements, and varied image/text proportions.
+* If the project has work, skills, experiences, or achievements, display them as an immersive horizontal or vertical gallery with large titles and subtle metadata—not small identical tiles.
+* Keep the structure clean and easy to scan. The design should still clearly meet all assignment requirements.
+
+Motion and interaction:
+
+* Add smooth, premium motion throughout, but keep it controlled and fast.
+* On page load: reveal the hero title line-by-line with a slight upward movement and fade-in.
+* On scroll: use subtle parallax for background elements, section titles that fade/slide into place, and image reveals with a soft mask or crop animation.
+* Navigation should be minimal and fixed, becoming slightly opaque or blurred after scrolling.
+* Buttons and links should have refined hover states: underline animation, magnetic movement of only a few pixels, or a soft accent glow.
+* Add a custom subtle cursor only if it works well on desktop; do not hurt mobile usability.
+* Respect reduced-motion preferences and make all content accessible.
+* Do not use distracting looping animations, bouncing elements, excessive scroll-jacking, or slow page transitions.
+
+Responsive behavior:
+
+* Make it fully responsive and polished on desktop, tablet, and mobile.
+* On mobile, preserve the oversized editorial type but scale it properly, simplify animations, keep navigation easy to use, and avoid clutter.
+
+Build quality:
+
+* Use semantic HTML and accessible color contrast.
+* Keep load time fast; use optimized visuals and CSS/JS motion rather than video.
+* Preserve all existing app functionality and teacher-required details.
+* Before finishing, review every page for consistent spacing, typography, color, and motion.
+
+The final result should feel like a creative director designed a personal digital identity: cinematic, minimal, dark, editorial, and memorable—similar in energy to a high-end athlete/artist portfolio, but clearly original and built around my own content.
