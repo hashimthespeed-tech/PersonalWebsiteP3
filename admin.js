@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const x = 18 + index * ((width - 36) / reasons.length);
       const barHeight = (value / max) * 175;
       const y = 208 - barHeight;
-      ctx.fillStyle = "#c66d4b";
+      ctx.fillStyle = "#a99af7";
       ctx.beginPath();
       ctx.roundRect(x, y, 38, barHeight, 8);
       ctx.fill();
-      ctx.fillStyle = "#617068";
+      ctx.fillStyle = "#a4a2b1";
       ctx.textAlign = "center";
       ctx.fillText(String(value), x + 19, y - 9);
       ctx.fillText(reasons[index], x + 19, 232);

@@ -166,5 +166,5 @@ app.use((req, res) => {
 });
 
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Jordan Ellis portfolio running on port ${port}`);
+  console.log(`Hashim Al Amin portfolio running on port ${port}`);
 });

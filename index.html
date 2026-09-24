@@ -17,20 +17,25 @@
   </header>
 
   <main>
-    <section class="video-hero">
-      <video class="hero-video" autoplay muted playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-label="Hashim Al Amin standing on a balcony">
-        <source src="videos/hero.mp4" type="video/mp4">
-      </video>
-      <div class="video-hero-content" aria-hidden="true">
-        <p class="eyebrow">Ambitious student · future-focused builder</p>
-        <h1>Hashim <span>Al Amin.</span></h1>
-        <p class="lead">Hi, I’m Hashim — a 17-year-old from San Diego focused on AI, communication, sports, and building the skills that turn goals into options.</p>
-        <div class="hero-actions"><a class="button" href="#contact">Say hello <span>↗</span></a><a class="button secondary" href="media.html">See the archive</a></div>
-        <div class="hero-note"><span class="hero-note-dot"></span><p>Based in San Diego, CA · Always learning</p></div>
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">San Diego, California <span>·</span> always learning</p>
+          <h1 id="home-title" class="hero-title"><span class="title-line">Hashim</span><span class="title-line title-accent">Al Amin</span></h1>
+          <p class="hero-statement">Curious by nature. Building with intention.</p>
+          <div class="hero-actions"><a class="button" href="#contact">Start a conversation <span>↗</span></a><a class="text-link" href="media.html">Explore the archive</a></div>
+          <a class="scroll-cue" href="#intro"><span class="scroll-cue-line"></span><span>scroll to explore</span><span>↓</span></a>
+        </div>
+        <figure class="hero-portrait" data-reveal>
+          <span class="portrait-index">01 / 06</span>
+          <img src="assets/jordan-portrait.svg" alt="Illustrated portrait of Hashim Al Amin">
+          <figcaption><span>17 years old</span><span>San Diego, CA</span></figcaption>
+        </figure>
       </div>
+      <span class="hero-coordinate" aria-hidden="true">32°42'54.0"N&nbsp; 117°09'45.6"W</span>
     </section>
 
-    <section class="section sage-band">
+    <section class="section sage-band" id="intro" data-reveal>
       <div class="container story-grid">
         <div><p class="eyebrow">A short introduction</p><h2>Goals first,<br>always.</h2></div>
         <div class="story-copy">
@@ -45,7 +50,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" data-reveal>
       <div class="container">
         <div class="section-header"><div><p class="eyebrow">Recent field notes</p><h2>A few things<br>I’ve been making.</h2></div><a class="text-link" href="media.html">View all media ↗</a></div>
         <div class="mini-grid">
@@ -56,7 +61,7 @@
       </div>
     </section>
 
-    <section class="section paper-band" id="contact">
+    <section class="section paper-band" id="contact" data-reveal>
       <div class="container contact-layout">
         <div class="contact-meta"><div><p class="eyebrow">Open inbox</p><h2>Let’s build<br>the next move.</h2><p class="lead">Have a question, an opportunity, or an idea around AI, sports, travel, or business? Send a message.</p></div><div class="contact-links"><a href="mailto:hashimalamin.2009@gmail.com"><span>hashimalamin.2009@gmail.com</span><span>↗</span></a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>↗</span></a></div></div>
         <form class="contact-form" id="contactForm">

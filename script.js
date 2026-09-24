@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("has-js");
+
   const menuToggle = document.querySelector(".menu-toggle");
   const siteNav = document.querySelector(".site-nav");
   if (menuToggle && siteNav) {
@@ -8,29 +10,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const hero = document.querySelector(".video-hero");
-  const heroVideo = document.querySelector(".hero-video");
-  const heroContent = document.querySelector(".video-hero-content");
-  if (hero && heroVideo && heroContent) {
-    const revealHeroText = () => {
-      hero.classList.add("revealed");
-      heroContent.setAttribute("aria-hidden", "false");
-    };
-    heroVideo.addEventListener("ended", revealHeroText, { once: true });
-    if (heroVideo.ended) revealHeroText();
+  const header = document.querySelector(".site-header");
+  const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 24);
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+
+  const revealSections = document.querySelectorAll(
+    "main > section:not(.home-hero), .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"
+  );
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion || !("IntersectionObserver" in window)) {
+    revealSections.forEach((section) => section.classList.add("is-visible"));
+  } else {
+    revealSections.forEach((section) => section.setAttribute("data-reveal", ""));
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealSections.forEach((section) => revealObserver.observe(section));
   }
 
+  if (!reducedMotion) {
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const portrait = document.querySelector(".hero-portrait");
+        if (portrait && window.scrollY < window.innerHeight) {
+          portrait.style.setProperty("--hero-shift", `${Math.min(window.scrollY * 0.035, 18)}px`);
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  const openMedia = (card) => {
+    const modal = document.querySelector("#mediaModal");
+    const content = document.querySelector("#modalContent");
+    const kind = card.dataset.kind || "image";
+    const source = card.dataset.media;
+    if (!modal || !content || !source) return;
+    content.innerHTML = kind === "video"
+      ? `<iframe title="Expanded media" src="${source}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`
+      : `<img src="${source}" alt="${card.dataset.alt || "Expanded portfolio media"}">`;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+  };
   document.querySelectorAll(".media-card[data-media]").forEach((card) => {
-    card.addEventListener("click", () => {
-      const modal = document.querySelector("#mediaModal");
-      const content = document.querySelector("#modalContent");
-      const kind = card.dataset.kind || "image";
-      const source = card.dataset.media;
-      content.innerHTML = kind === "video"
-        ? `<iframe title="Expanded media" src="${source}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`
-        : `<img src="${source}" alt="${card.dataset.alt || "Expanded portfolio media"}">`;
-      modal.classList.add("open");
-      modal.setAttribute("aria-hidden", "false");
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.addEventListener("click", () => openMedia(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openMedia(card);
+      }
     });
   });
 
