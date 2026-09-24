@@ -1,0 +1,1 @@
+- [WebGL preview verification](webgl-preview.md) — app preview may show the static fallback; confirm the cloud shader in a WebGL-capable browser.
