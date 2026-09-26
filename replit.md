@@ -15,8 +15,8 @@ The server listens on port 5000. The Replit workflow should use `npm run dev` wi
 - `index.html` — home page and contact form
 - `media.html` — nine-card media archive
 - `future.html` — five-year vision
-- `creative-coding.html` — creative coding story
-- `community.html` — community and collaboration story
+- `sports.html` — sports and current activities
+- `travel.html` — travel and the San Francisco business trip
 - `admin.html` — protected contact dashboard
 
 ## Storage and authentication
