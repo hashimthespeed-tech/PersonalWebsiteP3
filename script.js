@@ -1,3 +1,13 @@
+if (window.location.hash === "#intro") {
+  const pageUrl = `${window.location.pathname}${window.location.search}`;
+  window.history.replaceState(window.history.state, "", pageUrl);
+  document.documentElement.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  window.requestAnimationFrame(() => {
+    document.documentElement.style.removeProperty("scroll-behavior");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("has-js");
 
@@ -14,6 +24,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 24);
   updateHeader();
   window.addEventListener("scroll", updateHeader, { passive: true });
+
+  document.querySelectorAll("[data-text-reveal]").forEach((paragraph) => {
+    const text = paragraph.textContent.trim();
+    const words = document.createDocumentFragment();
+    let wordIndex = 0;
+
+    text.split(/(\s+)/).forEach((part) => {
+      if (!part.trim()) {
+        words.append(document.createTextNode(part));
+        return;
+      }
+
+      const word = document.createElement("span");
+      word.className = "home-intro-word";
+      word.style.transitionDelay = `${wordIndex * 45}ms`;
+      word.textContent = part;
+      words.append(word);
+      wordIndex += 1;
+    });
+
+    paragraph.replaceChildren(words);
+  });
 
   const revealSections = document.querySelectorAll(
     "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"

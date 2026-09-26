@@ -1563,6 +1563,10 @@ body[data-page="home"] .mini-card-content h3 {
 }
 .home-intro {
   align-items: center;
+  background:
+    radial-gradient(ellipse 58% 78% at 50% 48%, rgba(231, 194, 116, .24), transparent 74%),
+    linear-gradient(112deg, #e9eff4 0%, #f3f0e7 52%, #eaf0f5 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72), inset 0 -1px 0 rgba(23, 43, 76, .08);
   display: flex;
   justify-content: center;
   min-height: clamp(310px, 43vw, 520px);
@@ -1591,5 +1595,19 @@ body[data-page="home"] .mini-card-content h3 {
   line-height: 1.5;
   margin: 0 auto 16px;
   max-width: 720px;
+  text-shadow: 0 3px 18px rgba(23, 61, 120, .16);
 }
 .home-intro p:last-child { margin-bottom: 0; }
+.home-intro-word {
+  display: inline-block;
+  filter: blur(9px);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .48s ease, filter .48s ease, transform .55s cubic-bezier(.2, .7, .25, 1);
+  white-space: pre;
+}
+.home-intro.is-visible .home-intro-word {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0);
+}
