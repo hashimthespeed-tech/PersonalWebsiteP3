@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
 
 :root {
   --ink: #f0eee8;
@@ -1545,3 +1545,51 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   }
   .has-js [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* The homepage uses the clean sans-serif typography from the reference. */
+body[data-page="home"] {
+  --home-sans: "Inter", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--home-sans);
+}
+body[data-page="home"] .wordmark,
+body[data-page="home"] h1,
+body[data-page="home"] h2,
+body[data-page="home"] h3,
+body[data-page="home"] .hero-title,
+body[data-page="home"] .hero-statement,
+body[data-page="home"] .hero-seal,
+body[data-page="home"] .mini-card-content h3 {
+  font-family: var(--home-sans);
+}
+.home-intro {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: clamp(310px, 43vw, 520px);
+  padding: clamp(92px, 13vw, 176px) 0;
+  position: relative;
+  text-align: center;
+}
+.home-intro::before {
+  background: linear-gradient(90deg, transparent, rgba(23, 43, 76, .2), transparent);
+  content: "";
+  height: 1px;
+  left: clamp(24px, 8vw, 120px);
+  position: absolute;
+  right: clamp(24px, 8vw, 120px);
+  top: 0;
+}
+.home-intro .container {
+  max-width: 880px;
+  padding-left: clamp(24px, 8vw, 120px);
+  padding-right: clamp(24px, 8vw, 120px);
+}
+.home-intro p {
+  color: #344c6a;
+  font-size: clamp(1.18rem, 2vw, 1.65rem);
+  letter-spacing: -.035em;
+  line-height: 1.5;
+  margin: 0 auto 16px;
+  max-width: 720px;
+}
+.home-intro p:last-child { margin-bottom: 0; }
