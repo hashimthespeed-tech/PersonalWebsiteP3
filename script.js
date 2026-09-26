@@ -10,6 +10,7 @@ if (window.location.hash === "#intro") {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("has-js");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const menuToggle = document.querySelector(".menu-toggle");
   const siteNav = document.querySelector(".site-nav");
@@ -47,10 +48,69 @@ document.addEventListener("DOMContentLoaded", () => {
     paragraph.replaceChildren(words);
   });
 
+  const orbitStage = document.querySelector("[data-orbit-gallery]");
+  const orbitRing = orbitStage?.querySelector("[data-orbit-ring]");
+  const orbitPositions = orbitRing ? [...orbitRing.querySelectorAll(".orbit-position")] : [];
+  const orbitToggle = orbitStage?.querySelector("[data-orbit-toggle]");
+
+  if (orbitStage && orbitRing && orbitPositions.length && !reducedMotion && "IntersectionObserver" in window) {
+    const baseSpeed = 360 / 72000;
+    let angle = -14;
+    let velocity = baseSpeed;
+    let lastFrameTime = null;
+    let animationFrame = 0;
+    let isInView = false;
+    let isPaused = false;
+
+    const paintOrbit = () => {
+      orbitRing.style.transform = `rotateY(${angle}deg)`;
+      orbitPositions.forEach((position) => {
+        position.style.setProperty("--orbit-counter", `${-angle}deg`);
+      });
+    };
+
+    const animateOrbit = (time) => {
+      if (!isInView) {
+        animationFrame = 0;
+        return;
+      }
+      if (lastFrameTime === null) lastFrameTime = time;
+      const elapsed = Math.min(time - lastFrameTime, 80);
+      lastFrameTime = time;
+
+      const hasPointerOrKeyboardFocus = orbitStage.matches(":hover") || orbitStage.contains(document.activeElement);
+      const targetSpeed = isPaused ? 0 : baseSpeed * (hasPointerOrKeyboardFocus ? 0.22 : 1);
+      velocity += (targetSpeed - velocity) * (1 - Math.exp(-elapsed / 520));
+      angle = (angle + velocity * elapsed) % 360;
+      paintOrbit();
+      animationFrame = window.requestAnimationFrame(animateOrbit);
+    };
+
+    paintOrbit();
+    orbitToggle?.addEventListener("click", () => {
+      isPaused = !isPaused;
+      orbitToggle.setAttribute("aria-pressed", String(isPaused));
+      orbitToggle.querySelector("[data-orbit-toggle-label]").textContent = isPaused ? "Resume motion" : "Pause motion";
+      orbitToggle.querySelector("[data-orbit-toggle-icon]").textContent = isPaused ? "▶" : "Ⅱ";
+    });
+
+    const orbitObserver = new IntersectionObserver(([entry]) => {
+      isInView = entry.isIntersecting;
+      if (isInView && !animationFrame) {
+        lastFrameTime = null;
+        animationFrame = window.requestAnimationFrame(animateOrbit);
+      } else if (!isInView && animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+        lastFrameTime = null;
+      }
+    }, { threshold: 0.05 });
+    orbitObserver.observe(orbitStage);
+  }
+
   const revealSections = document.querySelectorAll(
     "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"
   );
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reducedMotion || !("IntersectionObserver" in window)) {
     revealSections.forEach((section) => section.classList.add("is-visible"));
   } else {
