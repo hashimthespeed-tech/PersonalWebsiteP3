@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", updateHeader, { passive: true });
 
   const revealSections = document.querySelectorAll(
-    "main > section:not(.home-hero), .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"
+    "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"
   );
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reducedMotion || !("IntersectionObserver" in window)) {

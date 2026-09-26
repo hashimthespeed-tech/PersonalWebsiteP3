@@ -123,14 +123,14 @@
   let frame = 0;
   let startTime = performance.now();
   let visible = document.visibilityState === "visible";
-  let heroCoversBackground = true;
+  let backgroundInView = false;
   let disposed = false;
 
   function requestRender() {
     if (
       !disposed &&
       visible &&
-      !heroCoversBackground &&
+      backgroundInView &&
       !reducedMotion.matches &&
       frame === 0
     ) {
@@ -161,7 +161,7 @@
 
   function render(now) {
     frame = 0;
-    if (disposed || !visible) return;
+    if (disposed || !visible || !backgroundInView) return;
     gl.uniform2f(resolution, canvas.width, canvas.height);
     gl.uniform1f(time, reducedMotion.matches ? 0 : ((now - startTime) / 1000) * 0.727);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -188,19 +188,18 @@
       frame = 0;
     }
   };
-  const heroObserver = new IntersectionObserver(([entry]) => {
-    heroCoversBackground = (entry?.intersectionRatio ?? 1) > 0.92;
-    if (heroCoversBackground && frame) {
-      cancelAnimationFrame(frame);
-      frame = 0;
-    } else if (!heroCoversBackground) {
+  const backgroundObserver = new IntersectionObserver(([entry]) => {
+    backgroundInView = entry?.isIntersecting ?? false;
+    if (backgroundInView) {
       if (reducedMotion.matches) render(performance.now());
       else requestRender();
+    } else if (frame) {
+      cancelAnimationFrame(frame);
+      frame = 0;
     }
-  }, { threshold: [0, 0.92] });
+  }, { threshold: 0.01 });
   const resizeObserver = new ResizeObserver(resize);
-  const hero = document.querySelector(".home-hero");
-  if (hero) heroObserver.observe(hero);
+  backgroundObserver.observe(canvas);
   resizeObserver.observe(canvas);
   document.addEventListener("visibilitychange", visibilityChange);
   if (reducedMotion.addEventListener) {
@@ -213,7 +212,7 @@
   function cleanup() {
     disposed = true;
     if (frame) cancelAnimationFrame(frame);
-    heroObserver.disconnect();
+    backgroundObserver.disconnect();
     resizeObserver.disconnect();
     document.removeEventListener("visibilitychange", visibilityChange);
     window.removeEventListener("resize", resize);

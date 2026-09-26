@@ -16,10 +16,6 @@
     </nav>
   </header>
 
-  <div class="home-rest-background" aria-hidden="true">
-    <canvas class="home-rest-shader" id="homeRestShader"></canvas>
-  </div>
-
   <main>
     <section class="home-hero" aria-labelledby="home-title">
       <canvas class="cloud-shader-canvas" id="cloudCanvas" aria-hidden="true"></canvas>
@@ -40,47 +36,53 @@
       <span class="hero-coordinate" aria-hidden="true">32°42'54.0"N&nbsp; 117°09'45.6"W</span>
     </section>
 
-    <section class="section sage-band" id="intro" data-reveal>
-      <div class="container story-grid">
-        <div><p class="eyebrow">A short introduction</p><h2>Goals first,<br>always.</h2></div>
-        <div class="story-copy">
-          <p>I’m a young, ambitious person who cares about making money, reaching my goals, and becoming more capable every day. I’m especially interested in artificial intelligence, communication, sports, and the opportunities that come from meeting the right people.</p>
-          <p>Networking is one of my favorite ways to learn. Every conversation can open a new perspective, a new skill, or a new opportunity — and I’m building the discipline to make the most of each one.</p>
-          <div class="numbered-list">
-            <div class="numbered-item"><strong>01</strong><div><h3>Learn the leverage</h3><p>AI can turn focused effort into bigger results.</p></div></div>
-            <div class="numbered-item"><strong>02</strong><div><h3>Communicate clearly</h3><p>Strong relationships start with showing up well.</p></div></div>
-            <div class="numbered-item"><strong>03</strong><div><h3>Keep competing</h3><p>Sports keep me disciplined, coachable, and resilient.</p></div></div>
+    <div class="home-rest">
+      <div class="home-rest-background" aria-hidden="true">
+        <canvas class="home-rest-shader" id="homeRestShader"></canvas>
+      </div>
+
+      <section class="section sage-band" id="intro" data-reveal>
+        <div class="container story-grid">
+          <div><p class="eyebrow">A short introduction</p><h2>Goals first,<br>always.</h2></div>
+          <div class="story-copy">
+            <p>I’m a young, ambitious person who cares about making money, reaching my goals, and becoming more capable every day. I’m especially interested in artificial intelligence, communication, sports, and the opportunities that come from meeting the right people.</p>
+            <p>Networking is one of my favorite ways to learn. Every conversation can open a new perspective, a new skill, or a new opportunity — and I’m building the discipline to make the most of each one.</p>
+            <div class="numbered-list">
+              <div class="numbered-item"><strong>01</strong><div><h3>Learn the leverage</h3><p>AI can turn focused effort into bigger results.</p></div></div>
+              <div class="numbered-item"><strong>02</strong><div><h3>Communicate clearly</h3><p>Strong relationships start with showing up well.</p></div></div>
+              <div class="numbered-item"><strong>03</strong><div><h3>Keep competing</h3><p>Sports keep me disciplined, coachable, and resilient.</p></div></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" data-reveal>
-      <div class="container">
-        <div class="section-header"><div><p class="eyebrow">Recent field notes</p><h2>A few things<br>I’ve been making.</h2></div><a class="text-link" href="media.html">View all media ↗</a></div>
-        <div class="mini-grid">
-          <article class="mini-card"><img src="assets/camera-walk.svg" alt="Illustration of Hashim exploring San Diego"><div class="mini-card-content"><h3>Travel and perspective</h3><p>New places sharpen the way I see opportunities.</p></div></article>
-          <article class="mini-card"><img src="assets/studio-table.svg" alt="Illustration of an AI project workspace"><div class="mini-card-content"><h3>AI in the making</h3><p>Turning curiosity into useful skills and income.</p></div></article>
-          <article class="mini-card"><img src="assets/jordan-portrait.svg" alt="Illustrated portrait placeholder for Hashim Al Amin"><div class="mini-card-content"><h3>Five years out</h3><p>Building toward $20k a month in passive income.</p></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section paper-band" id="contact" data-reveal>
-      <div class="container contact-layout">
-        <div class="contact-meta"><div><p class="eyebrow">Open inbox</p><h2>Let’s build<br>the next move.</h2><p class="lead">Have a question, an opportunity, or an idea around AI, sports, travel, or business? Send a message.</p></div><div class="contact-links"><a href="mailto:hashimalamin.2009@gmail.com"><span>hashimalamin.2009@gmail.com</span><span>↗</span></a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a><a href="https://www.linkedin.com/in/hashim-al-amin-4a998a341/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>↗</span></a></div></div>
-        <form class="contact-form" id="contactForm">
-          <div class="form-grid">
-            <div class="field"><label for="firstName">First name</label><input id="firstName" name="firstName" required></div>
-            <div class="field"><label for="lastName">Last name</label><input id="lastName" name="lastName" required></div>
-            <div class="field full"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
-            <div class="field full"><label for="reason">Reason for contact</label><select id="reason" name="reason" required><option value="">Choose one</option><option>Comment</option><option>Question</option><option>Partnership</option><option>Opportunity</option><option>Other</option></select></div>
-            <div class="field full"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Write a little something…"></textarea></div>
+      <section class="section" data-reveal>
+        <div class="container">
+          <div class="section-header"><div><p class="eyebrow">Recent field notes</p><h2>A few things<br>I’ve been making.</h2></div><a class="text-link" href="media.html">View all media ↗</a></div>
+          <div class="mini-grid">
+            <article class="mini-card"><img src="assets/camera-walk.svg" alt="Illustration of Hashim exploring San Diego"><div class="mini-card-content"><h3>Travel and perspective</h3><p>New places sharpen the way I see opportunities.</p></div></article>
+            <article class="mini-card"><img src="assets/studio-table.svg" alt="Illustration of an AI project workspace"><div class="mini-card-content"><h3>AI in the making</h3><p>Turning curiosity into useful skills and income.</p></div></article>
+            <article class="mini-card"><img src="assets/jordan-portrait.svg" alt="Illustrated portrait placeholder for Hashim Al Amin"><div class="mini-card-content"><h3>Five years out</h3><p>Building toward $20k a month in passive income.</p></div></article>
           </div>
-          <div class="form-footer"><p class="form-message" id="formMessage" aria-live="polite"></p><button class="button" type="submit">Send message ↗</button></div>
-        </form>
-      </div>
-    </section>
+        </div>
+      </section>
+
+      <section class="section paper-band" id="contact" data-reveal>
+        <div class="container contact-layout">
+          <div class="contact-meta"><div><p class="eyebrow">Open inbox</p><h2>Let’s build<br>the next move.</h2><p class="lead">Have a question, an opportunity, or an idea around AI, sports, travel, or business? Send a message.</p></div><div class="contact-links"><a href="mailto:hashimalamin.2009@gmail.com"><span>hashimalamin.2009@gmail.com</span><span>↗</span></a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a><a href="https://www.linkedin.com/in/hashim-al-amin-4a998a341/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>↗</span></a></div></div>
+          <form class="contact-form" id="contactForm">
+            <div class="form-grid">
+              <div class="field"><label for="firstName">First name</label><input id="firstName" name="firstName" required></div>
+              <div class="field"><label for="lastName">Last name</label><input id="lastName" name="lastName" required></div>
+              <div class="field full"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+              <div class="field full"><label for="reason">Reason for contact</label><select id="reason" name="reason" required><option value="">Choose one</option><option>Comment</option><option>Question</option><option>Partnership</option><option>Opportunity</option><option>Other</option></select></div>
+              <div class="field full"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Write a little something…"></textarea></div>
+            </div>
+            <div class="form-footer"><p class="form-message" id="formMessage" aria-live="polite"></p><button class="button" type="submit">Send message ↗</button></div>
+          </form>
+        </div>
+      </section>
+    </div>
   </main>
   <footer class="site-footer"><div class="container footer-inner"><p>© 2026 Hashim Al Amin. Made with intention.</p><div class="footer-links"><a href="media.html">Media</a><a href="future.html">Future</a><a href="admin.html">Admin</a></div></div></footer>
   <script src="home-rest-shader.js"></script>
