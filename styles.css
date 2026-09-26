@@ -958,3 +958,35 @@ body.world-page ::selection { background: rgba(90, 210, 244, .36); color: #fff; 
   }
   body.world-page .world-shader { display: none; }
 }
+
+/* The grayscale mesh shader sits behind the home content, not the hero. */
+body[data-page="home"] .home-rest-background {
+  isolation: isolate;
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+body[data-page="home"] .home-rest-shader {
+  background:
+    radial-gradient(ellipse 44% 42% at 22% 28%, rgba(245, 245, 245, .42), transparent 74%),
+    radial-gradient(ellipse 38% 46% at 79% 68%, rgba(176, 176, 176, .34), transparent 76%),
+    linear-gradient(145deg, #101012, #29292e 48%, #101012);
+  display: block;
+  height: 100%;
+  inset: 0;
+  opacity: .42;
+  position: absolute;
+  width: 100%;
+}
+body[data-page="home"] .home-rest-background::after {
+  background: rgba(9, 9, 12, .56);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+body[data-page="home"] main,
+body[data-page="home"] .site-footer {
+  position: relative;
+  z-index: 1;
+}
