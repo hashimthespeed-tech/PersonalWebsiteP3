@@ -108,6 +108,28 @@ document.addEventListener("DOMContentLoaded", () => {
     orbitObserver.observe(orbitStage);
   }
 
+  const orbitLightbox = document.querySelector("[data-orbit-lightbox]");
+  const orbitLightboxTitle = orbitLightbox?.querySelector("[data-orbit-lightbox-title]");
+  const orbitLightboxDescription = orbitLightbox?.querySelector("[data-orbit-lightbox-description]");
+  const orbitLightboxImage = orbitLightbox?.querySelector("[data-orbit-lightbox-image]");
+  orbitStage?.querySelectorAll("[data-orbit-photo]").forEach((card) => {
+    card.addEventListener("click", () => {
+      const image = card.querySelector("img");
+      const title = card.querySelector(".orbit-card-title");
+      if (!orbitLightbox || !image || !title || !orbitLightboxTitle || !orbitLightboxDescription || !orbitLightboxImage) return;
+
+      orbitLightboxTitle.textContent = title.textContent.trim();
+      orbitLightboxDescription.textContent = card.dataset.description || "";
+      orbitLightboxImage.src = image.currentSrc || image.src;
+      orbitLightboxImage.alt = image.alt;
+      if (!orbitLightbox.open) orbitLightbox.showModal();
+    });
+  });
+  orbitLightbox?.querySelector("[data-orbit-lightbox-close]")?.addEventListener("click", () => orbitLightbox.close());
+  orbitLightbox?.addEventListener("click", (event) => {
+    if (event.target === orbitLightbox) orbitLightbox.close();
+  });
+
   const revealSections = document.querySelectorAll(
     "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"
   );
