@@ -112,16 +112,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const values = reasons.map((reason) => messages.filter((item) => item.reason === reason).length);
     const max = Math.max(1, ...values);
     ctx.clearRect(0, 0, width, height);
-    ctx.font = "12px system-ui";
+    ctx.font = "12px -apple-system, BlinkMacSystemFont, sans-serif";
     values.forEach((value, index) => {
       const x = 18 + index * ((width - 36) / reasons.length);
       const barHeight = (value / max) * 175;
       const y = 208 - barHeight;
-      ctx.fillStyle = "#a99af7";
+      ctx.fillStyle = "#5ad2f4";
       ctx.beginPath();
       ctx.roundRect(x, y, 38, barHeight, 8);
       ctx.fill();
-      ctx.fillStyle = "#a4a2b1";
+      ctx.fillStyle = "#afd0dc";
       ctx.textAlign = "center";
       ctx.fillText(String(value), x + 19, y - 9);
       ctx.fillText(reasons[index], x + 19, 232);
