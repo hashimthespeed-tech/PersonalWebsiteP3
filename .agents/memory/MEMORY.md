@@ -1,2 +1,3 @@
 - [WebGL preview verification](webgl-preview.md) — app preview may show the static fallback; confirm the cloud shader in a WebGL-capable browser.
 - [Viewport-sized shader backgrounds](viewport-shader-backgrounds.md) — Keep long-page shader canvases viewport-sized so their color fields stay visible while scrolling.
+- [Public image metadata](public-image-metadata.md) — Strip EXIF/GPS from uploaded photos before using them in public site assets.
