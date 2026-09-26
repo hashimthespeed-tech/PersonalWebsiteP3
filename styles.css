@@ -1961,11 +1961,11 @@ body[data-page="home"] .mini-card-content h3 {
 
 /* Shared animated shader behind sections without their own selected surface. */
 html {
-  background-color: #100d08;
+  background-color: #bc8425;
   background-image:
-    radial-gradient(ellipse 54% 48% at 18% 80%, rgba(188, 132, 37, .2), transparent 72%),
-    radial-gradient(ellipse 48% 50% at 80% 18%, rgba(133, 88, 25, .25), transparent 74%),
-    linear-gradient(135deg, #100d08, #241a0e 52%, #110d08);
+    radial-gradient(ellipse 54% 48% at 18% 80%, rgba(231, 194, 116, .12), transparent 72%),
+    radial-gradient(ellipse 48% 50% at 80% 18%, rgba(231, 194, 116, .08), transparent 74%),
+    linear-gradient(135deg, #bc8425, #bc8425 52%, #bc8425);
 }
 html.shader-fallback {
   animation: shader-fallback-drift 80s ease-in-out infinite alternate;
@@ -1995,7 +1995,7 @@ body, body.world-page {
   z-index: -2;
 }
 body::before {
-  background: linear-gradient(115deg, rgba(16, 12, 7, .3), rgba(16, 12, 7, .2) 54%, rgba(16, 12, 7, .32));
+  background: transparent;
   content: "";
   inset: 0;
   pointer-events: none;
