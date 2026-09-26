@@ -1,0 +1,58 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --color-muted: var(--cream);
+  --color-muted-foreground: var(--muted);
+}
+
+.works-wheel-section {
+  padding-bottom: clamp(28px, 6vw, 76px);
+  padding-top: 0;
+}
+
+.works-wheel-help {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 auto 10px;
+  max-width: 1440px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+#works-wheel-root {
+  height: clamp(430px, 70svh, 760px);
+  min-height: 430px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.works-wheel-fallback {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  margin: 0;
+}
+
+@media (max-width: 620px) {
+  .works-wheel-section {
+    padding-bottom: 44px;
+  }
+
+  .works-wheel-help {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  #works-wheel-root {
+    height: 68svh;
+    min-height: 410px;
+  }
+}
