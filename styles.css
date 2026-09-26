@@ -1703,15 +1703,22 @@ body[data-page="home"] .mini-card-content h3 {
   width: 0;
 }
 .orbit-card {
+  appearance: none;
   aspect-ratio: .74;
+  background: transparent;
   border: 1px solid rgba(249, 245, 233, .58);
   border-radius: 2px;
   box-shadow: 0 22px 58px rgba(0, 0, 0, .54);
+  color: inherit;
+  cursor: pointer;
   display: block;
+  font: inherit;
   left: 0;
   overflow: hidden;
+  padding: 0;
   position: absolute;
   top: 0;
+  text-align: left;
   transform:
     translate(-50%, -50%)
     rotateY(calc(var(--face-angle) + var(--orbit-counter, 0deg)))
@@ -1802,6 +1809,85 @@ body[data-page="home"] .mini-card-content h3 {
   border-color: rgba(247, 244, 237, .72);
 }
 .orbit-motion-toggle [data-orbit-toggle-icon] { color: #e7c274; font-weight: 800; }
+.orbit-lightbox:not([open]) { display: none; }
+.orbit-lightbox {
+  background: #101116;
+  border: 1px solid rgba(247, 244, 237, .24);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, .55);
+  color: var(--ink);
+  inset: 0;
+  margin: auto;
+  max-height: calc(100dvh - 48px);
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+  width: min(1080px, calc(100vw - 48px));
+}
+.orbit-lightbox[open] {
+  display: grid;
+  grid-template-columns: minmax(230px, .72fr) minmax(0, 1.7fr);
+}
+.orbit-lightbox::backdrop {
+  background: rgba(4, 7, 12, .82);
+  backdrop-filter: blur(8px);
+}
+.orbit-lightbox-copy {
+  align-self: center;
+  padding: clamp(24px, 4vw, 52px);
+}
+.orbit-lightbox-title {
+  color: #f3f1ec;
+  font-size: clamp(1.8rem, 3.6vw, 3rem);
+  letter-spacing: -.045em;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+.orbit-lightbox-copy p {
+  color: #c5c5cb;
+  font-size: .92rem;
+  line-height: 1.7;
+  margin: 18px 0 0;
+  max-width: 34ch;
+}
+.orbit-lightbox-media {
+  align-items: center;
+  background: #07080b;
+  display: grid;
+  height: min(78vh, 740px);
+  justify-items: center;
+  margin: 0;
+  min-height: 320px;
+  padding: 18px;
+}
+.orbit-lightbox-media img {
+  height: auto;
+  max-height: min(calc(78dvh - 36px), 704px);
+  max-width: 100%;
+  object-fit: contain;
+  width: auto;
+}
+.orbit-lightbox-close {
+  align-items: center;
+  background: rgba(8, 10, 14, .84);
+  border: 1px solid rgba(247, 244, 237, .42);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  font-size: 1.5rem;
+  height: 42px;
+  line-height: 1;
+  place-items: center;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  transition: background .2s ease, border-color .2s ease;
+  width: 42px;
+}
+.orbit-lightbox-close:hover {
+  background: #293343;
+  border-color: rgba(247, 244, 237, .75);
+}
 @media (hover: none) {
   .orbit-card-caption { opacity: 1; transform: none; }
 }
@@ -1825,6 +1911,17 @@ body[data-page="home"] .mini-card-content h3 {
   .orbit-card-title { font-size: .78rem; }
   .orbit-card-cta { font-size: .58rem; }
   .orbit-motion-toggle { bottom: 13px; }
+  .orbit-lightbox {
+    max-height: calc(100dvh - 28px);
+    width: calc(100vw - 28px);
+  }
+  .orbit-lightbox[open] { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+  .orbit-lightbox-copy { padding: 22px 62px 8px 22px; }
+  .orbit-lightbox-title { font-size: 1.8rem; }
+  .orbit-lightbox-copy p { font-size: .84rem; margin-top: 10px; }
+  .orbit-lightbox-media { height: min(54dvh, 460px); min-height: 210px; padding: 8px; }
+  .orbit-lightbox-media img { max-height: min(calc(54dvh - 16px), 444px); }
+  .orbit-lightbox-close { height: 38px; right: 10px; top: 10px; width: 38px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .orbit-ring { transform: rotateY(-14deg) !important; }
