@@ -28,9 +28,9 @@
       return value;
     }
     vec3 palette(float value) {
-      vec3 rust = vec3(0.7373, 0.5176, 0.1451);
-      vec3 sunlit = vec3(0.80, 0.58, 0.20);
-      return mix(rust, sunlit, smoothstep(0.32, 0.82, value) * 0.2);
+      vec3 paper = vec3(0.9451, 0.9333, 0.8980);
+      vec3 light = vec3(0.98, 0.973, 0.953);
+      return mix(paper, light, smoothstep(0.32, 0.82, value) * 0.08);
     }
     void main() {
       vec2 uv = gl_FragCoord.xy / resolution;
