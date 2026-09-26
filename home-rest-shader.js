@@ -30,7 +30,7 @@
         / min(u_resolution.x, u_resolution.y);
       p *= 1.16;
 
-      vec3 acc = vec3(0.035, 0.032, 0.024) * 0.22;
+      vec3 acc = vec3(0.03) * 0.22;
       float total = 0.22;
       for (int i = 0; i < 4; i++) {
         float fi = float(i);
@@ -40,10 +40,10 @@
         ) * 0.62;
         float weight = exp(-dot(p - center, p - center) * 3.6);
         vec3 color;
-        if (i == 0) color = vec3(0.96, 0.68, 0.18);
-        else if (i == 1) color = vec3(1.0, 0.88, 0.62);
-        else if (i == 2) color = vec3(0.78, 0.25, 0.08);
-        else color = vec3(0.36, 0.42, 0.13);
+        if (i == 0) color = vec3(0.72);
+        else if (i == 1) color = vec3(0.98);
+        else if (i == 2) color = vec3(0.46);
+        else color = vec3(0.18);
         acc += color * weight;
         total += weight;
       }

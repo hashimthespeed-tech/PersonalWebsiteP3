@@ -965,7 +965,7 @@ body.world-page ::selection { background: rgba(90, 210, 244, .36); color: #fff; 
   body.world-page .world-shader { display: none; }
 }
 
-/* The warm-color mesh shader fills the post-hero content only. */
+/* The monochrome mesh shader fills the post-hero content only. */
 .home-rest {
   background: var(--paper);
   isolation: isolate;
@@ -985,9 +985,9 @@ body.world-page ::selection { background: rgba(90, 210, 244, .36); color: #fff; 
 }
 .home-rest-shader {
   background:
-    radial-gradient(ellipse 48% 46% at 22% 28%, rgba(236, 177, 46, .74), transparent 74%),
-    radial-gradient(ellipse 42% 48% at 79% 68%, rgba(178, 78, 35, .66), transparent 76%),
-    linear-gradient(145deg, #100f0b, #272216 48%, #100f0b);
+    radial-gradient(ellipse 48% 46% at 22% 28%, rgba(248, 248, 248, .72), transparent 74%),
+    radial-gradient(ellipse 42% 48% at 79% 68%, rgba(145, 145, 145, .58), transparent 76%),
+    linear-gradient(145deg, #090909, #262626 48%, #090909);
   display: block;
   height: 100%;
   inset: 0;
@@ -996,7 +996,7 @@ body.world-page ::selection { background: rgba(90, 210, 244, .36); color: #fff; 
   width: 100%;
 }
 .home-rest-background::after {
-  background: rgba(9, 9, 7, .18);
+  background: rgba(9, 9, 9, .18);
   content: "";
   inset: 0;
   position: absolute;
