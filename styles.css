@@ -1779,10 +1779,15 @@ body[data-page="home"] .mini-card-content h3 {
 }
 .orbit-card:hover img,
 .orbit-card:focus-visible img { filter: saturate(1.08) brightness(1.07); }
+.orbit-card:hover,
+.orbit-card:focus-visible,
+.orbit-position.is-hovered .orbit-card {
+  box-shadow: 0 30px 76px rgba(0, 0, 0, .68);
+  scale: 1.035;
+}
 .orbit-card:focus-visible {
   outline: 3px solid #e7c274;
   outline-offset: 4px;
-  z-index: 2;
 }
 .orbit-motion-toggle {
   align-items: center;
@@ -1827,9 +1832,16 @@ body[data-page="home"] .mini-card-content h3 {
   display: grid;
   grid-template-columns: minmax(230px, .72fr) minmax(0, 1.7fr);
 }
+.orbit-lightbox.is-entering { animation: orbit-lightbox-in .62s cubic-bezier(.2, .7, .25, 1) both; }
 .orbit-lightbox::backdrop {
   background: rgba(4, 7, 12, .82);
   backdrop-filter: blur(8px);
+}
+.orbit-lightbox.is-entering::backdrop { animation: orbit-lightbox-backdrop-in .45s ease-out both; }
+.orbit-lightbox.is-entering .home-intro-word {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 .orbit-lightbox-copy {
   align-self: center;
@@ -1866,6 +1878,9 @@ body[data-page="home"] .mini-card-content h3 {
   object-fit: contain;
   width: auto;
 }
+.orbit-lightbox.is-entering .orbit-lightbox-media img {
+  animation: orbit-lightbox-image-in .62s cubic-bezier(.2, .7, .25, 1) both;
+}
 .orbit-lightbox-close {
   align-items: center;
   background: rgba(8, 10, 14, .84);
@@ -1887,6 +1902,18 @@ body[data-page="home"] .mini-card-content h3 {
 .orbit-lightbox-close:hover {
   background: #293343;
   border-color: rgba(247, 244, 237, .75);
+}
+@keyframes orbit-lightbox-in {
+  from { filter: blur(8px); opacity: 0; transform: translateY(18px) scale(.985); }
+  to { filter: blur(0); opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes orbit-lightbox-backdrop-in {
+  from { background: rgba(4, 7, 12, 0); backdrop-filter: blur(0); }
+  to { background: rgba(4, 7, 12, .82); backdrop-filter: blur(8px); }
+}
+@keyframes orbit-lightbox-image-in {
+  from { opacity: 0; transform: scale(.965); }
+  to { opacity: 1; transform: scale(1); }
 }
 @media (hover: none) {
   .orbit-card-caption { opacity: 1; transform: none; }
@@ -1926,4 +1953,8 @@ body[data-page="home"] .mini-card-content h3 {
 @media (prefers-reduced-motion: reduce) {
   .orbit-ring { transform: rotateY(-14deg) !important; }
   .orbit-motion-toggle { display: none; }
+  .orbit-lightbox.is-entering,
+  .orbit-lightbox.is-entering .orbit-lightbox-media img,
+  .orbit-lightbox.is-entering::backdrop { animation: none; }
+  .orbit-lightbox .home-intro-word { filter: none; opacity: 1; transform: none; transition: none; }
 }

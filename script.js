@@ -51,7 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const orbitStage = document.querySelector("[data-orbit-gallery]");
   const orbitRing = orbitStage?.querySelector("[data-orbit-ring]");
   const orbitPositions = orbitRing ? [...orbitRing.querySelectorAll(".orbit-position")] : [];
+  const orbitCards = orbitStage ? [...orbitStage.querySelectorAll(".orbit-card")] : [];
   const orbitToggle = orbitStage?.querySelector("[data-orbit-toggle]");
+
+  orbitCards.forEach((card) => {
+    const position = card.closest(".orbit-position");
+    const updateActivePosition = () => {
+      position?.classList.toggle("is-hovered", card.matches(":hover") || card === document.activeElement);
+    };
+    ["pointerenter", "pointerleave", "focus", "blur"].forEach((eventName) => {
+      card.addEventListener(eventName, updateActivePosition);
+    });
+  });
 
   if (orbitStage && orbitRing && orbitPositions.length && !reducedMotion && "IntersectionObserver" in window) {
     const baseSpeed = 360 / 72000;
@@ -78,7 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const elapsed = Math.min(time - lastFrameTime, 80);
       lastFrameTime = time;
 
-      const hasPointerOrKeyboardFocus = orbitStage.matches(":hover") || orbitStage.contains(document.activeElement);
+      const hasPointerOrKeyboardFocus =
+        orbitCards.some((card) => card.matches(":hover") || card === document.activeElement) ||
+        Boolean(orbitToggle?.matches(":hover, :focus-visible"));
       const targetSpeed = isPaused ? 0 : baseSpeed * (hasPointerOrKeyboardFocus ? 0.22 : 1);
       velocity += (targetSpeed - velocity) * (1 - Math.exp(-elapsed / 520));
       angle = (angle + velocity * elapsed) % 360;
@@ -112,22 +125,72 @@ document.addEventListener("DOMContentLoaded", () => {
   const orbitLightboxTitle = orbitLightbox?.querySelector("[data-orbit-lightbox-title]");
   const orbitLightboxDescription = orbitLightbox?.querySelector("[data-orbit-lightbox-description]");
   const orbitLightboxImage = orbitLightbox?.querySelector("[data-orbit-lightbox-image]");
-  orbitStage?.querySelectorAll("[data-orbit-photo]").forEach((card) => {
+  const revealLightboxText = (element, text, delayOffset = 0) => {
+    if (reducedMotion) {
+      element.textContent = text;
+      return 0;
+    }
+
+    const fragment = document.createDocumentFragment();
+    let wordIndex = 0;
+    text.split(/(\s+)/).forEach((part) => {
+      if (!part.trim()) {
+        fragment.append(document.createTextNode(part));
+        return;
+      }
+
+      const word = document.createElement("span");
+      word.className = "home-intro-word";
+      word.style.transitionDelay = `${delayOffset + wordIndex * 38}ms`;
+      word.textContent = part;
+      fragment.append(word);
+      wordIndex += 1;
+    });
+    element.replaceChildren(fragment);
+    return wordIndex;
+  };
+  const closeOrbitLightbox = () => {
+    if (!orbitLightbox?.open) return;
+    orbitLightbox.classList.remove("is-entering");
+    orbitLightbox.close();
+  };
+  orbitCards.forEach((card) => {
     card.addEventListener("click", () => {
       const image = card.querySelector("img");
       const title = card.querySelector(".orbit-card-title");
       if (!orbitLightbox || !image || !title || !orbitLightboxTitle || !orbitLightboxDescription || !orbitLightboxImage) return;
 
-      orbitLightboxTitle.textContent = title.textContent.trim();
-      orbitLightboxDescription.textContent = card.dataset.description || "";
+      orbitLightbox.classList.remove("is-entering");
+      const titleText = title.textContent.trim();
+      if (reducedMotion) {
+        orbitLightboxTitle.textContent = titleText;
+        orbitLightboxDescription.textContent = card.dataset.description || "";
+      } else {
+        const titleWordCount = revealLightboxText(orbitLightboxTitle, titleText);
+        revealLightboxText(
+          orbitLightboxDescription,
+          card.dataset.description || "",
+          Math.min(titleWordCount * 38, 228)
+        );
+      }
       orbitLightboxImage.src = image.currentSrc || image.src;
       orbitLightboxImage.alt = image.alt;
       if (!orbitLightbox.open) orbitLightbox.showModal();
+      window.requestAnimationFrame(() => {
+        if (orbitLightbox.open) orbitLightbox.classList.add("is-entering");
+      });
     });
   });
-  orbitLightbox?.querySelector("[data-orbit-lightbox-close]")?.addEventListener("click", () => orbitLightbox.close());
+  orbitLightbox?.querySelector("[data-orbit-lightbox-close]")?.addEventListener("click", closeOrbitLightbox);
   orbitLightbox?.addEventListener("click", (event) => {
-    if (event.target === orbitLightbox) orbitLightbox.close();
+    if (event.target === orbitLightbox) closeOrbitLightbox();
+  });
+  orbitLightbox?.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeOrbitLightbox();
+  });
+  orbitLightbox?.addEventListener("close", () => {
+    orbitLightbox.classList.remove("is-entering");
   });
 
   const revealSections = document.querySelectorAll(
