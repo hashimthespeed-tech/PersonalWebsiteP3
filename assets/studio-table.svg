@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650">
-  <rect width="900" height="650" fill="#17171f"/><rect y="478" width="900" height="172" fill="#24232e"/>
-  <rect x="95" y="84" width="310" height="210" rx="14" fill="#252431"/><path d="M130 245c70-130 112-50 161-121 42 56 67 78 83 121" fill="#a99af7"/><circle cx="230" cy="160" r="44" fill="#7668b2"/>
-  <path d="M530 390V188l156-56v258" fill="#101015"/><path d="m530 188 156-56-55-44-156 58z" fill="#343247"/><rect x="592" y="209" width="73" height="55" fill="#a99af7"/><path d="M170 478c35-121 73-167 115-167s80 46 115 167" fill="#514779"/><circle cx="285" cy="253" r="64" fill="#b8836c"/><path d="M221 253c0-98 39-128 80-128 61 0 84 44 75 119l-39-48c-31 35-71 50-116 46z" fill="#201f2b"/>
-  <text x="545" y="565" fill="#e6e3f3" font-family="Georgia,serif" font-size="28">THE MAKING TABLE</text>
+  <rect width="900" height="650" fill="#171614"/><rect y="478" width="900" height="172" fill="#24221d"/>
+  <rect x="95" y="84" width="310" height="210" rx="14" fill="#25231e"/><path d="M130 245c70-130 112-50 161-121 42 56 67 78 83 121" fill="#d2a52d"/><circle cx="230" cy="160" r="44" fill="#7f5f1e"/>
+  <path d="M530 390V188l156-56v258" fill="#10100e"/><path d="m530 188 156-56-55-44-156 58z" fill="#343026"/><rect x="592" y="209" width="73" height="55" fill="#d2a52d"/><path d="M170 478c35-121 73-167 115-167s80 46 115 167" fill="#413a2e"/><circle cx="285" cy="253" r="64" fill="#b8836c"/><path d="M221 253c0-98 39-128 80-128 61 0 84 44 75 119l-39-48c-31 35-71 50-116 46z" fill="#201e19"/>
+  <text x="545" y="565" fill="#e8e2d4" font-family="Georgia,serif" font-size="28">THE MAKING TABLE</text>
 </svg>

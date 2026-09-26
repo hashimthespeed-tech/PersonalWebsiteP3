@@ -30,29 +30,29 @@
         / min(u_resolution.x, u_resolution.y);
       p *= 1.16;
 
-      vec3 acc = vec3(0.0627451) * 0.15;
-      float total = 0.15;
+      vec3 acc = vec3(0.035, 0.032, 0.024) * 0.22;
+      float total = 0.22;
       for (int i = 0; i < 4; i++) {
         float fi = float(i);
         vec2 center = vec2(
-          sin(u_time * (0.21 + fi * 0.071) + fi * 2.4 + 1453.0),
-          cos(u_time * (0.17 + fi * 0.093) + fi * 1.7)
-        ) * 0.569;
-        float weight = exp(-dot(p - center, p - center) * 6.0);
+          sin(u_time * (0.31 + fi * 0.095) + fi * 2.4 + 1453.0),
+          cos(u_time * (0.25 + fi * 0.11) + fi * 1.7)
+        ) * 0.62;
+        float weight = exp(-dot(p - center, p - center) * 3.6);
         vec3 color;
-        if (i == 0) color = vec3(0.0627451);
-        else if (i == 1) color = vec3(0.9607843);
-        else if (i == 2) color = vec3(0.6901961);
-        else color = vec3(0.2274510);
+        if (i == 0) color = vec3(0.96, 0.68, 0.18);
+        else if (i == 1) color = vec3(1.0, 0.88, 0.62);
+        else if (i == 2) color = vec3(0.78, 0.25, 0.08);
+        else color = vec3(0.36, 0.42, 0.13);
         acc += color * weight;
         total += weight;
       }
 
-      vec3 color = (acc / total - 0.5) * 1.158 + 0.5;
+      vec3 color = (acc / total - 0.5) * 1.32 + 0.5;
       float grainSeed = mod(1453.0, 31.0);
       color += (grainHash(
         gl_FragCoord.xy + vec2(grainSeed * 17.0, grainSeed * 31.0)
-      ) - 0.5) * 0.091;
+      ) - 0.5) * 0.045;
       gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
     }
   `;
@@ -163,7 +163,7 @@
     frame = 0;
     if (disposed || !visible || !backgroundInView) return;
     gl.uniform2f(resolution, canvas.width, canvas.height);
-    gl.uniform1f(time, reducedMotion.matches ? 0 : ((now - startTime) / 1000) * 0.727);
+    gl.uniform1f(time, reducedMotion.matches ? 0 : ((now - startTime) / 1000) * 1.35);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     requestRender();
   }
