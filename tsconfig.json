@@ -17,5 +17,5 @@
     },
     "types": ["vite/client"]
   },
-  "include": ["components/**/*.tsx", "lib/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
+    "include": ["components/**/*.tsx", "lib/**/*.ts", "src/**/*.tsx", "vite.config.mts"]
 }

@@ -52,6 +52,12 @@ const clamp = (value: number, min: number, max: number) =>
 const lerp = (start: number, end: number, amount: number) =>
   start + (end - start) * amount;
 type Stage = { w: number; h: number };
+type DragState = {
+  pointerId: number;
+  startY: number;
+  lastY: number;
+  moved: boolean;
+};
 const rad = (degrees: number) => (degrees * Math.PI) / 180;
 const bowAt = (drumDegrees: number, bow: number) =>
   -bow * (1 - Math.cos(rad(drumDegrees)));
@@ -85,7 +91,7 @@ export function WorksWheel({
   const titleRef = React.useRef<HTMLDivElement>(null);
   const turn = React.useRef(0);
   const target = React.useRef(0);
-  const drag = React.useRef<number | null>(null);
+  const drag = React.useRef<DragState | null>(null);
   const settling = React.useRef<number | undefined>(undefined);
   const [active, setActive] = React.useState(0);
   const [stage, setStage] = React.useState<Stage>({ w: 0, h: 0 });
@@ -228,17 +234,32 @@ export function WorksWheel({
         className="focus-visible:outline-foreground absolute inset-0 cursor-grab touch-pan-x outline-none focus-visible:outline-2 focus-visible:-outline-offset-4 active:cursor-grabbing"
         style={{ perspective: `${metrics.depth}px` }}
         onPointerDown={(event) => {
-          drag.current = event.clientY;
-          event.currentTarget.setPointerCapture(event.pointerId);
+          drag.current = {
+            pointerId: event.pointerId,
+            startY: event.clientY,
+            lastY: event.clientY,
+            moved: false,
+          };
         }}
         onPointerMove={(event) => {
-          if (drag.current === null) return;
-          to(target.current + (drag.current - event.clientY) / DRAG_UNITS);
-          drag.current = event.clientY;
+          const current = drag.current;
+          if (!current || current.pointerId !== event.pointerId) return;
+          if (!current.moved && Math.abs(current.startY - event.clientY) >= 5) {
+            current.moved = true;
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }
+          if (current.moved) {
+            to(target.current + (current.lastY - event.clientY) / DRAG_UNITS);
+          }
+          current.lastY = event.clientY;
         }}
         onPointerUp={() => {
+          const wasDragging = drag.current?.moved;
           drag.current = null;
-          if (target.current > 1) to(Math.round(target.current));
+          if (wasDragging && target.current > 1) to(Math.round(target.current));
+        }}
+        onPointerCancel={() => {
+          drag.current = null;
         }}
         onKeyDown={(event) => {
           if (event.key === "ArrowDown") to(Math.round(target.current) + 1);
