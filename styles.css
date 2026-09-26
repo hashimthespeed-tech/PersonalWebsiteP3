@@ -1961,14 +1961,14 @@ body[data-page="home"] .mini-card-content h3 {
 
 /* Shared animated shader behind sections without their own selected surface. */
 html {
-  background-color: #020b1d;
+  background-color: #100d08;
   background-image:
-    radial-gradient(ellipse 54% 48% at 18% 80%, rgba(3, 184, 245, .5), transparent 72%),
-    radial-gradient(ellipse 48% 50% at 80% 18%, rgba(23, 83, 190, .76), transparent 74%),
-    linear-gradient(135deg, #020b1d, #0a2350 52%, #03111f);
+    radial-gradient(ellipse 54% 48% at 18% 80%, rgba(188, 132, 37, .2), transparent 72%),
+    radial-gradient(ellipse 48% 50% at 80% 18%, rgba(133, 88, 25, .25), transparent 74%),
+    linear-gradient(135deg, #100d08, #241a0e 52%, #110d08);
 }
 html.shader-fallback {
-  animation: shader-fallback-drift 18s ease-in-out infinite alternate;
+  animation: shader-fallback-drift 80s ease-in-out infinite alternate;
   background-size: 170% 170%, 180% 180%, 100% 100%;
 }
 @keyframes shader-fallback-drift {
@@ -1995,7 +1995,7 @@ body, body.world-page {
   z-index: -2;
 }
 body::before {
-  background: linear-gradient(115deg, rgba(2, 11, 29, .34), rgba(2, 11, 29, .24) 54%, rgba(2, 11, 29, .35));
+  background: linear-gradient(115deg, rgba(16, 12, 7, .3), rgba(16, 12, 7, .2) 54%, rgba(16, 12, 7, .32));
   content: "";
   inset: 0;
   pointer-events: none;
@@ -2008,14 +2008,14 @@ body::before {
   box-shadow: none;
 }
 .home-intro::before {
-  background: linear-gradient(90deg, transparent, rgba(158, 229, 249, .34), transparent);
+  background: linear-gradient(90deg, transparent, rgba(231, 194, 116, .2), transparent);
 }
 .home-intro p {
   color: #f2f8fd;
   text-shadow: 0 3px 20px rgba(0, 9, 26, .78);
 }
 .sage-band, .paper-band { background: transparent; }
-.sage-band::before, .paper-band::before { border-color: rgba(202, 235, 249, .22); }
+.sage-band::before, .paper-band::before { border-color: rgba(231, 194, 116, .18); }
 
 body .page-hero h1,
 body .admin-login h1,
@@ -2030,7 +2030,7 @@ body .numbered-item h3 {
   text-shadow: 0 2px 18px rgba(0, 8, 25, .72), 0 0 3px rgba(0, 8, 25, .5);
 }
 body .page-hero h1 span,
-body .admin-login h1 span { color: #8be4fb !important; }
+body .admin-login h1 span { color: #e7c274 !important; }
 body .page-hero .lead,
 body .admin-login .lead,
 body .story-copy > p,
@@ -2049,22 +2049,22 @@ body .section-header .eyebrow,
 body .feature-split > div:not(.accent-card) .eyebrow,
 body .timeline-year,
 body .numbered-item strong {
-  color: #8be4fb;
+  color: #e7c274;
   text-shadow: 0 1px 9px rgba(0, 7, 23, .88);
 }
 body .contact-links a { color: #d7eafa; }
 body .contact-links a:hover,
-body .contact-links a span:last-child { color: #8be4fb; }
+body .contact-links a span:last-child { color: #e7c274; }
 body .admin-shell { color: #f2f8fd; }
 body .travel-photo figcaption {
-  border-color: rgba(202, 235, 249, .22);
+  border-color: rgba(231, 194, 116, .18);
   color: #e4f2fa;
 }
 body .travel-photo figcaption span:last-child { color: rgba(228, 242, 250, .68); }
 body .numbered-list,
 body .numbered-item,
 body .timeline,
-body .section-header { border-color: rgba(202, 235, 249, .25); }
+body .section-header { border-color: rgba(231, 194, 116, .2); }
 body .footer-inner p,
 body .footer-links a { color: rgba(235, 245, 252, .72); }
-body .footer-links a:hover { color: #8be4fb; }
+body .footer-links a:hover { color: #e7c274; }

@@ -28,30 +28,30 @@
       return value;
     }
     vec3 palette(float value) {
-      vec3 deep = vec3(0.0078, 0.0431, 0.1137);
-      vec3 blue = vec3(0.0431, 0.2431, 0.5686);
-      vec3 cyan = vec3(0.0314, 0.7255, 0.9608);
-      vec3 ice = vec3(0.9176, 0.9765, 1.0);
+      vec3 deep = vec3(0.035, 0.027, 0.018);
+      vec3 umber = vec3(0.14, 0.094, 0.039);
+      vec3 rust = vec3(0.32, 0.22, 0.09);
+      vec3 amber = vec3(0.48, 0.34, 0.13);
       float t = clamp(value, 0.0, 1.0) * 3.0;
-      if (t < 1.0) return mix(deep, blue, smoothstep(0.0, 1.0, t));
-      if (t < 2.0) return mix(blue, cyan, smoothstep(0.0, 1.0, t - 1.0));
-      return mix(cyan, ice, smoothstep(0.0, 1.0, t - 2.0));
+      if (t < 1.0) return mix(deep, umber, smoothstep(0.0, 1.0, t));
+      if (t < 2.0) return mix(umber, rust, smoothstep(0.0, 1.0, t - 1.0));
+      return mix(rust, amber, smoothstep(0.0, 1.0, t - 2.0));
     }
     void main() {
       vec2 uv = gl_FragCoord.xy / resolution;
       vec2 p = (gl_FragCoord.xy - 0.5 * resolution) / min(resolution.x, resolution.y);
-      float t = time * -0.65;
+      float t = time * -0.38;
       p *= 2.0;
       float warpX = fbm(p * 1.5 + vec2(t, 2.4));
       float warpY = fbm(p * 1.5 + vec2(5.2, -t));
-      p += (vec2(warpX, warpY) - 0.5) * 0.68;
+      p += (vec2(warpX, warpY) - 0.5) * 0.42;
       float wave = uv.y
-        + sin(uv.x * 5.7 + t * 1.25 + fbm(p * 1.2) * 2.2) * 0.19
-        + (fbm(p * 2.1 + t * 0.34) - 0.5) * 0.85;
+        + sin(uv.x * 5.7 + t * 1.25 + fbm(p * 1.2) * 2.2) * 0.1
+        + (fbm(p * 2.1 + t * 0.34) - 0.5) * 0.48;
       vec3 color = palette(wave);
       float vignette = 1.0 - smoothstep(0.12, 1.05, length((uv - 0.5) * vec2(1.0, 0.78)));
-      color *= mix(0.42, 1.0, vignette);
-      color = (color - 0.5) * 1.38 + 0.5;
+      color *= mix(0.5, 0.9, vignette);
+      color = mix(vec3(0.014, 0.012, 0.009), color, 0.82);
       gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
     }
   `;
@@ -136,7 +136,7 @@
       frame = 0;
       if (disposed || !visible || !inView) return;
       gl.uniform2f(resolution, canvas.width, canvas.height);
-      gl.uniform1f(time, ((now - started) / 1000) * 1.15);
+      gl.uniform1f(time, ((now - started) / 1000) * 0.2);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (!reducedMotion.matches) frame = requestAnimationFrame(draw);
     };
