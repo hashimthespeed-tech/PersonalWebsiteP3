@@ -43,7 +43,7 @@ interface GallerySceneProps {
 
 const DEPTH_RANGE = 32;
 const START_DEPTH = 3.2;
-const AUTO_SPEED = 0.82;
+const AUTO_SECONDS_PER_PHOTO = 2;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 
 const clamp = (value: number, min: number, max: number) =>
@@ -59,6 +59,7 @@ function GalleryScene({
 }: GallerySceneProps) {
   const textures = useTexture(photos.map((photo) => photo.src));
   const visibleCount = Math.min(8, photos.length);
+  const autoSpeed = DEPTH_RANGE / visibleCount / AUTO_SECONDS_PER_PHOTO;
   const planes = useMemo<PhotoPlane[]>(
     () =>
       Array.from({ length: visibleCount }, (_, slot) => ({
@@ -86,7 +87,7 @@ function GalleryScene({
 
     const delta = Math.min(frameDelta, 0.05);
     const idleFor = performance.now() - motion.current.lastInput;
-    const targetVelocity = idleFor > 3000 ? AUTO_SPEED : 0;
+    const targetVelocity = idleFor > 3000 ? autoSpeed : 0;
     const easing = 1 - Math.exp(-1.3 * delta);
     motion.current.velocity +=
       (targetVelocity - motion.current.velocity) * easing;
@@ -113,8 +114,8 @@ function GalleryScene({
       const distanceRatio = clamp(depth / DEPTH_RANGE, 0, 1);
       const spread = 0.18 + distanceRatio * 0.82;
       mesh.position.set(
-        Math.sin(plane.angle) * (0.5 + spread * 4.1),
-        Math.cos(plane.angle * 1.35) * (0.25 + spread * 2),
+        Math.sin(plane.angle) * (0.3 + spread * 3.4),
+        Math.cos(plane.angle * 1.35) * (0.12 + spread * 1.15),
         -depth,
       );
       mesh.rotation.set(
@@ -131,7 +132,7 @@ function GalleryScene({
       const image = texture?.image as { width?: number; height?: number } | undefined;
       const aspect =
         image?.width && image.height ? image.width / image.height : 1.35;
-      const photoHeight = 2 + distanceRatio * 0.58;
+      const photoHeight = 2.35 + distanceRatio * 0.38;
       const photoWidth =
         aspect >= 1
           ? photoHeight * Math.min(aspect, 1.75)

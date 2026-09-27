@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       homeGalleryStatus?.setAttribute("aria-live", "off");
       homeGalleryAutoplayTimer = window.setInterval(() => {
         setHomeGallerySlide(activeHomeGalleryIndex + 1);
-      }, 2500);
+      }, 2000);
     } else if (!shouldRun && homeGalleryAutoplayTimer !== null) {
       window.clearInterval(homeGalleryAutoplayTimer);
       homeGalleryAutoplayTimer = null;

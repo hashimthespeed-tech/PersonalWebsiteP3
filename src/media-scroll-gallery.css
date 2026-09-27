@@ -213,3 +213,79 @@
 @media (prefers-reduced-motion: reduce) {
   .media-scroll-stage { cursor: auto; }
 }
+
+/* The Media route is an immersive, viewport-filling photo gallery. */
+body.media-gallery-page {
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+body.media-gallery-page .site-header {
+  background: rgba(241, 238, 229, .84);
+  backdrop-filter: blur(14px);
+  border-bottom-color: rgba(23, 43, 76, .12);
+  left: 0;
+  max-width: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 30;
+}
+body.media-gallery-page .media-gallery-main {
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+body.media-gallery-page .media-scroll-gallery-section {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  width: 100%;
+}
+body.media-gallery-page #media-scroll-root,
+body.media-gallery-page .media-scroll-gallery {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+body.media-gallery-page .media-scroll-gallery {
+  flex-direction: column;
+  margin: 0;
+  position: relative;
+}
+body.media-gallery-page .media-scroll-stage {
+  border: 0;
+  border-radius: 0;
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+body.media-gallery-page .media-scroll-instructions {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+body.media-gallery-page .media-scroll-fallback {
+  align-content: center;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+}
+
+@media (max-width: 740px) {
+  body.media-gallery-page .media-scroll-fallback {
+    align-content: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
