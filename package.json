@@ -5,13 +5,15 @@
   "description": "A six-page personal portfolio with persistent contact messages and an admin dashboard.",
   "main": "server.js",
   "scripts": {
-    "build:media-wheel": "tsc --noEmit && vite build",
-    "prestart": "npm run build:media-wheel",
+    "build:media-gallery": "tsc --noEmit && vite build",
+    "prestart": "npm run build:media-gallery",
     "start": "node server.js",
-    "predev": "npm run build:media-wheel",
+    "predev": "npm run build:media-gallery",
     "dev": "node server.js"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
     "@replit/object-storage": "^1.0.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
@@ -23,6 +25,7 @@
     "react-dom": "^19.3.0",
     "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.3",
+    "three": "^0.186.1",
     "typescript": "^7.0.2",
     "vite": "^8.3.1"
   }

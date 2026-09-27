@@ -18,15 +18,15 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: resolve(projectRoot, "assets/works-wheel"),
+    outDir: resolve(projectRoot, "assets/media-scroll"),
     emptyOutDir: true,
     cssCodeSplit: false,
     lib: {
-      entry: resolve(projectRoot, "src/media-wheel-entry.tsx"),
-      name: "MediaWorksWheel",
+      entry: resolve(projectRoot, "src/media-scroll-entry.tsx"),
+      name: "MediaScrollGallery",
       formats: ["iife"],
-      fileName: () => "media-works-wheel.js",
-      cssFileName: "media-works-wheel",
+      fileName: () => "media-scroll-gallery.js",
+      cssFileName: "media-scroll-gallery",
     },
   },
 });

@@ -57,36 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
     ? [...homeGallery.querySelectorAll("[data-gallery-dot]")]
     : [];
   const homeGalleryStatus = homeGallery?.querySelector("[data-gallery-status]");
-  const homeGalleryAutoplayToggle = homeGallery?.querySelector("[data-gallery-autoplay-toggle]");
-  const homeGalleryAutoplayLabel = homeGalleryAutoplayToggle?.querySelector("[data-gallery-autoplay-label]");
-  const homeGalleryAutoplayIcon = homeGalleryAutoplayToggle?.querySelector("[data-gallery-autoplay-icon]");
   const orbitCards = homeGallery
     ? [...homeGallery.querySelectorAll("[data-orbit-photo]")]
     : [];
   let activeHomeGalleryIndex = 0;
-  let homeGalleryAutoplayPaused = reducedMotion;
   let homeGalleryPointerActive = false;
   let homeGalleryIsVisible = !("IntersectionObserver" in window);
   let homeGalleryAutoplayTimer = null;
   let homeGalleryLightboxOpen = false;
 
-  const paintHomeGalleryAutoplayToggle = () => {
-    if (!homeGalleryAutoplayToggle) return;
-    const paused = homeGalleryAutoplayPaused;
-    const label = paused ? "Resume auto-scroll" : "Pause auto-scroll";
-    homeGalleryAutoplayToggle.setAttribute("aria-pressed", String(paused));
-    homeGalleryAutoplayToggle.setAttribute(
-      "aria-label",
-      paused ? "Resume automatic gallery scrolling" : "Pause automatic gallery scrolling"
-    );
-    if (homeGalleryAutoplayLabel) homeGalleryAutoplayLabel.textContent = label;
-    if (homeGalleryAutoplayIcon) homeGalleryAutoplayIcon.textContent = paused ? "▶" : "Ⅱ";
-  };
-
   const syncHomeGalleryAutoplay = () => {
     const shouldRun = Boolean(
       homeGallery &&
-      !homeGalleryAutoplayPaused &&
       !homeGalleryPointerActive &&
       homeGalleryIsVisible &&
       !homeGalleryLightboxOpen &&
@@ -96,12 +78,35 @@ document.addEventListener("DOMContentLoaded", () => {
       homeGalleryStatus?.setAttribute("aria-live", "off");
       homeGalleryAutoplayTimer = window.setInterval(() => {
         setHomeGallerySlide(activeHomeGalleryIndex + 1);
-      }, 8000);
+      }, 2500);
     } else if (!shouldRun && homeGalleryAutoplayTimer !== null) {
       window.clearInterval(homeGalleryAutoplayTimer);
       homeGalleryAutoplayTimer = null;
       homeGalleryStatus?.setAttribute("aria-live", "polite");
     }
+  };
+
+  const shuffleHomeGallery = () => {
+    for (let index = homeGallerySlides.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [homeGallerySlides[index], homeGallerySlides[randomIndex]] = [
+        homeGallerySlides[randomIndex],
+        homeGallerySlides[index],
+      ];
+    }
+
+    const track = homeGallery?.querySelector(".home-coverflow-track");
+    homeGallerySlides.forEach((slide, index) => {
+      track?.append(slide);
+      const title = slide.querySelector(".orbit-card-title")?.textContent?.trim() || `Photo ${index + 1}`;
+      const count = slide.querySelector(".home-gallery-count");
+      const category = count?.textContent?.split("·").slice(1).join("·").trim();
+      slide.setAttribute("aria-label", `${index + 1} of ${homeGallerySlides.length}: ${title}`);
+      if (count) {
+        count.textContent = `${String(index + 1).padStart(2, "0")} / ${homeGallerySlides.length}${category ? ` · ${category}` : ""}`;
+      }
+      homeGalleryDots[index]?.setAttribute("aria-label", `Show ${title} photo`);
+    });
   };
 
   const paintHomeGallery = () => {
@@ -145,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (homeGallery && homeGalleryStage && homeGallerySlides.length) {
+    shuffleHomeGallery();
     paintHomeGallery();
     homeGalleryDots.forEach((dot, index) => {
       dot.addEventListener("click", () => setHomeGallerySlide(index));
@@ -155,13 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
     homeGallery.querySelector("[data-gallery-next]")?.addEventListener("click", () => {
       setHomeGallerySlide(activeHomeGalleryIndex + 1);
     });
-    homeGalleryAutoplayToggle?.addEventListener("click", () => {
-      homeGalleryAutoplayPaused = !homeGalleryAutoplayPaused;
-      paintHomeGalleryAutoplayToggle();
-      syncHomeGalleryAutoplay();
-    });
-    paintHomeGalleryAutoplayToggle();
-
     document.addEventListener("visibilitychange", syncHomeGalleryAutoplay);
     if ("IntersectionObserver" in window) {
       const homeGalleryVisibilityObserver = new IntersectionObserver(([entry]) => {
@@ -327,42 +326,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ticking = false;
       });
     }, { passive: true });
-  }
-
-  const openMedia = (card) => {
-    const modal = document.querySelector("#mediaModal");
-    const content = document.querySelector("#modalContent");
-    const kind = card.dataset.kind || "image";
-    const source = card.dataset.media;
-    if (!modal || !content || !source) return;
-    content.innerHTML = kind === "video"
-      ? `<iframe title="Expanded media" src="${source}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`
-      : `<img src="${source}" alt="${card.dataset.alt || "Expanded portfolio media"}">`;
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden", "false");
-  };
-  document.querySelectorAll(".media-card[data-media]").forEach((card) => {
-    card.setAttribute("role", "button");
-    card.setAttribute("tabindex", "0");
-    card.addEventListener("click", () => openMedia(card));
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openMedia(card);
-      }
-    });
-  });
-
-  const modal = document.querySelector("#mediaModal");
-  if (modal) {
-    const closeModal = () => {
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden", "true");
-      document.querySelector("#modalContent").innerHTML = "";
-    };
-    document.querySelector(".modal-close")?.addEventListener("click", closeModal);
-    modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
-    document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeModal(); });
   }
 
   const form = document.querySelector("#contactForm");
