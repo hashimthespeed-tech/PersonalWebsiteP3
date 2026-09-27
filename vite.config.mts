@@ -18,15 +18,15 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: resolve(projectRoot, "assets/media-scroll"),
+    outDir: resolve(projectRoot, "assets/media-gallery"),
     emptyOutDir: true,
     cssCodeSplit: false,
     lib: {
-      entry: resolve(projectRoot, "src/media-scroll-entry.tsx"),
-      name: "MediaScrollGallery",
+      entry: resolve(projectRoot, "src/media-gallery-entry.tsx"),
+      name: "MediaGallery",
       formats: ["iife"],
-      fileName: () => "media-scroll-gallery.js",
-      cssFileName: "media-scroll-gallery",
+      fileName: () => "media-gallery.js",
+      cssFileName: "media-gallery",
     },
   },
 });
