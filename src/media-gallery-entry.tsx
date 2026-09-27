@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import MediaGallery, {
   type InstagramPost,
   type MediaPhoto,
+  type LocalVideo,
 } from "@/components/ui/media-gallery";
 import "./media-gallery.css";
 
@@ -97,13 +98,23 @@ if (mount) {
     },
   ];
 
-  const videos: InstagramPost[] = [
+  const videos: (InstagramPost | LocalVideo)[] = [
     {
+      kind: "instagram",
       url: "https://www.instagram.com/reels/Ddwq04CTBLw/",
-      title: "Instagram Reel",
-      category: "Social",
+      title: "Car detailing Reel",
+      category: "Detailing",
       description:
-        "Play the Reel here, or open the original post on Instagram.",
+        "Watch the car detailing Reel here, or open the original post on Instagram.",
+    },
+    {
+      kind: "file",
+      src: "/assets/media/car-detailing.mp4",
+      poster: "/assets/media/car-detailing-poster.jpg",
+      title: "Car detailing",
+      category: "Detailing",
+      description:
+        "A car being washed and detailed at a residential driveway.",
     },
   ];
 

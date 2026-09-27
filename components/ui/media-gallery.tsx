@@ -9,19 +9,31 @@ export interface MediaPhoto {
 }
 
 export interface InstagramPost {
+  kind: "instagram";
   url: string;
   title: string;
   category: string;
   description: string;
 }
 
+export interface LocalVideo {
+  kind: "file";
+  src: string;
+  poster: string;
+  title: string;
+  category: string;
+  description: string;
+}
+
+export type MediaVideo = InstagramPost | LocalVideo;
+
 type SelectedMedia =
   | ({ kind: "photo" } & MediaPhoto)
-  | ({ kind: "instagram" } & InstagramPost);
+  | MediaVideo;
 
 interface MediaGalleryProps {
   photos: MediaPhoto[];
-  videos: InstagramPost[];
+  videos: MediaVideo[];
 }
 
 declare global {
@@ -109,21 +121,44 @@ export default function MediaGallery({ photos, videos }: MediaGalleryProps) {
         </h2>
         <div className="media-video-grid">
           {videos.map((video) => (
-            <article className="media-video-card" key={video.url}>
-              <div className="media-instagram-frame">
-                <blockquote
-                  className="instagram-media"
-                  data-instgrm-permalink={video.url}
-                  data-instgrm-version="14"
-                >
-                  <a
-                    href={video.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+            <article
+              className="media-video-card"
+              key={video.kind === "instagram" ? video.url : video.src}
+            >
+              <div
+                className={
+                  video.kind === "instagram"
+                    ? "media-instagram-frame"
+                    : "media-local-video-frame"
+                }
+              >
+                {video.kind === "instagram" ? (
+                  <blockquote
+                    className="instagram-media"
+                    data-instgrm-permalink={video.url}
+                    data-instgrm-version="14"
                   >
-                    View this post on Instagram
-                  </a>
-                </blockquote>
+                    <a
+                      href={video.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View this post on Instagram
+                    </a>
+                  </blockquote>
+                ) : (
+                  <video
+                    className="media-local-video"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={video.poster}
+                    aria-label={video.title}
+                  >
+                    <source src={video.src} type="video/mp4" />
+                    Your browser does not support this video.
+                  </video>
+                )}
               </div>
               <div className="media-video-caption">
                 <div>
@@ -133,9 +168,7 @@ export default function MediaGallery({ photos, videos }: MediaGalleryProps) {
                 <button
                   className="media-details-button"
                   type="button"
-                  onClick={() =>
-                    setSelected({ kind: "instagram", ...video })
-                  }
+                  onClick={() => setSelected(video)}
                 >
                   Details
                 </button>
@@ -172,6 +205,18 @@ export default function MediaGallery({ photos, videos }: MediaGalleryProps) {
                 src={selected.src}
                 alt={selected.alt}
               />
+            ) : selected.kind === "file" ? (
+              <video
+                className="media-detail-video"
+                controls
+                playsInline
+                preload="metadata"
+                poster={selected.poster}
+                aria-label={selected.title}
+              >
+                <source src={selected.src} type="video/mp4" />
+                Your browser does not support this video.
+              </video>
             ) : (
               <div className="media-detail-social">
                 <span>Instagram Reel</span>
