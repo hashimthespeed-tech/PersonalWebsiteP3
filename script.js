@@ -57,10 +57,56 @@ document.addEventListener("DOMContentLoaded", () => {
     ? [...homeGallery.querySelectorAll("[data-gallery-dot]")]
     : [];
   const homeGalleryStatus = homeGallery?.querySelector("[data-gallery-status]");
+  const homeGalleryAutoplayToggle = homeGallery?.querySelector("[data-gallery-autoplay-toggle]");
+  const homeGalleryAutoplayLabel = homeGalleryAutoplayToggle?.querySelector("[data-gallery-autoplay-label]");
+  const homeGalleryAutoplayIcon = homeGalleryAutoplayToggle?.querySelector("[data-gallery-autoplay-icon]");
   const orbitCards = homeGallery
     ? [...homeGallery.querySelectorAll("[data-orbit-photo]")]
     : [];
   let activeHomeGalleryIndex = 0;
+  let homeGalleryAutoplayPaused = reducedMotion;
+  let homeGalleryPointerInside = false;
+  let homeGalleryHasFocus = false;
+  let homeGalleryPointerActive = false;
+  let homeGalleryIsVisible = !("IntersectionObserver" in window);
+  let homeGalleryAutoplayTimer = null;
+  let homeGalleryLightboxOpen = false;
+
+  const paintHomeGalleryAutoplayToggle = () => {
+    if (!homeGalleryAutoplayToggle) return;
+    const paused = homeGalleryAutoplayPaused;
+    const label = paused ? "Resume auto-scroll" : "Pause auto-scroll";
+    homeGalleryAutoplayToggle.setAttribute("aria-pressed", String(paused));
+    homeGalleryAutoplayToggle.setAttribute(
+      "aria-label",
+      paused ? "Resume automatic gallery scrolling" : "Pause automatic gallery scrolling"
+    );
+    if (homeGalleryAutoplayLabel) homeGalleryAutoplayLabel.textContent = label;
+    if (homeGalleryAutoplayIcon) homeGalleryAutoplayIcon.textContent = paused ? "▶" : "Ⅱ";
+  };
+
+  const syncHomeGalleryAutoplay = () => {
+    const shouldRun = Boolean(
+      homeGallery &&
+      !homeGalleryAutoplayPaused &&
+      !homeGalleryPointerInside &&
+      !homeGalleryHasFocus &&
+      !homeGalleryPointerActive &&
+      homeGalleryIsVisible &&
+      !homeGalleryLightboxOpen &&
+      !document.hidden
+    );
+    if (shouldRun && homeGalleryAutoplayTimer === null) {
+      homeGalleryStatus?.setAttribute("aria-live", "off");
+      homeGalleryAutoplayTimer = window.setInterval(() => {
+        setHomeGallerySlide(activeHomeGalleryIndex + 1);
+      }, 8000);
+    } else if (!shouldRun && homeGalleryAutoplayTimer !== null) {
+      window.clearInterval(homeGalleryAutoplayTimer);
+      homeGalleryAutoplayTimer = null;
+      homeGalleryStatus?.setAttribute("aria-live", "polite");
+    }
+  };
 
   const paintHomeGallery = () => {
     const total = homeGallerySlides.length;
@@ -113,6 +159,40 @@ document.addEventListener("DOMContentLoaded", () => {
     homeGallery.querySelector("[data-gallery-next]")?.addEventListener("click", () => {
       setHomeGallerySlide(activeHomeGalleryIndex + 1);
     });
+    homeGalleryAutoplayToggle?.addEventListener("click", () => {
+      homeGalleryAutoplayPaused = !homeGalleryAutoplayPaused;
+      paintHomeGalleryAutoplayToggle();
+      syncHomeGalleryAutoplay();
+    });
+    paintHomeGalleryAutoplayToggle();
+
+    homeGallery.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") return;
+      homeGalleryPointerInside = true;
+      syncHomeGalleryAutoplay();
+    });
+    homeGallery.addEventListener("pointerleave", (event) => {
+      if (event.pointerType !== "mouse") return;
+      homeGalleryPointerInside = false;
+      syncHomeGalleryAutoplay();
+    });
+    homeGallery.addEventListener("focusin", () => {
+      homeGalleryHasFocus = true;
+      syncHomeGalleryAutoplay();
+    });
+    homeGallery.addEventListener("focusout", (event) => {
+      if (homeGallery.contains(event.relatedTarget)) return;
+      homeGalleryHasFocus = false;
+      syncHomeGalleryAutoplay();
+    });
+    document.addEventListener("visibilitychange", syncHomeGalleryAutoplay);
+    if ("IntersectionObserver" in window) {
+      const homeGalleryVisibilityObserver = new IntersectionObserver(([entry]) => {
+        homeGalleryIsVisible = entry.isIntersecting;
+        syncHomeGalleryAutoplay();
+      }, { threshold: 0.08 });
+      homeGalleryVisibilityObserver.observe(homeGallery);
+    }
     homeGalleryStage.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") setHomeGallerySlide(activeHomeGalleryIndex - 1);
       else if (event.key === "ArrowRight") setHomeGallerySlide(activeHomeGalleryIndex + 1);
@@ -124,6 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
     homeGalleryStage.addEventListener("pointerdown", (event) => {
       if (event.pointerType === "mouse" && event.button !== 0) return;
       pointerStart = { id: event.pointerId, x: event.clientX, moved: false };
+      homeGalleryPointerActive = true;
+      syncHomeGalleryAutoplay();
     });
     homeGalleryStage.addEventListener("pointermove", (event) => {
       if (!pointerStart || pointerStart.id !== event.pointerId) return;
@@ -139,6 +221,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const moved = pointerStart.moved;
       pointerStart = null;
       homeGalleryStage.classList.remove("is-dragging");
+      homeGalleryPointerActive = false;
+      syncHomeGalleryAutoplay();
       if (moved && Math.abs(delta) >= 48) {
         setHomeGallerySlide(activeHomeGalleryIndex + (delta < 0 ? 1 : -1));
       }
@@ -146,8 +230,11 @@ document.addEventListener("DOMContentLoaded", () => {
     homeGalleryStage.addEventListener("pointercancel", () => {
       pointerStart = null;
       homeGalleryStage.classList.remove("is-dragging");
+      homeGalleryPointerActive = false;
+      syncHomeGalleryAutoplay();
     });
     window.addEventListener("resize", paintHomeGallery);
+    syncHomeGalleryAutoplay();
   }
 
   const orbitLightbox = document.querySelector("[data-orbit-lightbox]");
@@ -182,6 +269,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!orbitLightbox?.open) return;
     orbitLightbox.classList.remove("is-entering");
     orbitLightbox.close();
+    homeGalleryLightboxOpen = false;
+    syncHomeGalleryAutoplay();
   };
   orbitCards.forEach((card, index) => {
     card.addEventListener("click", () => {
@@ -209,6 +298,8 @@ document.addEventListener("DOMContentLoaded", () => {
       orbitLightboxImage.src = image.currentSrc || image.src;
       orbitLightboxImage.alt = image.alt;
       if (!orbitLightbox.open) orbitLightbox.showModal();
+      homeGalleryLightboxOpen = true;
+      syncHomeGalleryAutoplay();
       window.requestAnimationFrame(() => {
         if (orbitLightbox.open) orbitLightbox.classList.add("is-entering");
       });
@@ -224,6 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   orbitLightbox?.addEventListener("close", () => {
     orbitLightbox.classList.remove("is-entering");
+    homeGalleryLightboxOpen = false;
+    syncHomeGalleryAutoplay();
   });
 
   const revealSections = document.querySelectorAll(
