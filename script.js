@@ -48,77 +48,106 @@ document.addEventListener("DOMContentLoaded", () => {
     paragraph.replaceChildren(words);
   });
 
-  const orbitStage = document.querySelector("[data-orbit-gallery]");
-  const orbitRing = orbitStage?.querySelector("[data-orbit-ring]");
-  const orbitPositions = orbitRing ? [...orbitRing.querySelectorAll(".orbit-position")] : [];
-  const orbitCards = orbitStage ? [...orbitStage.querySelectorAll(".orbit-card")] : [];
-  const orbitToggle = orbitStage?.querySelector("[data-orbit-toggle]");
+  const homeGallery = document.querySelector("[data-home-gallery]");
+  const homeGalleryStage = homeGallery?.querySelector("[data-home-gallery-stage]");
+  const homeGallerySlides = homeGallery
+    ? [...homeGallery.querySelectorAll("[data-home-gallery-slide]")]
+    : [];
+  const homeGalleryDots = homeGallery
+    ? [...homeGallery.querySelectorAll("[data-gallery-dot]")]
+    : [];
+  const homeGalleryStatus = homeGallery?.querySelector("[data-gallery-status]");
+  const orbitCards = homeGallery
+    ? [...homeGallery.querySelectorAll("[data-orbit-photo]")]
+    : [];
+  let activeHomeGalleryIndex = 0;
 
-  orbitCards.forEach((card) => {
-    const position = card.closest(".orbit-position");
-    const updateActivePosition = () => {
-      position?.classList.toggle("is-hovered", card.matches(":hover") || card === document.activeElement);
-    };
-    ["pointerenter", "pointerleave", "focus", "blur"].forEach((eventName) => {
-      card.addEventListener(eventName, updateActivePosition);
-    });
-  });
+  const paintHomeGallery = () => {
+    const total = homeGallerySlides.length;
+    if (!homeGalleryStage || !total) return;
+    const stageWidth = homeGalleryStage.clientWidth;
+    const spacing = stageWidth <= 620
+      ? Math.min(stageWidth * 0.47, 180)
+      : Math.min(stageWidth * 0.31, 350);
 
-  if (orbitStage && orbitRing && orbitPositions.length && !reducedMotion && "IntersectionObserver" in window) {
-    const baseSpeed = 360 / 72000;
-    let angle = -14;
-    let velocity = baseSpeed;
-    let lastFrameTime = null;
-    let animationFrame = 0;
-    let isInView = false;
-    let isPaused = false;
-
-    const paintOrbit = () => {
-      orbitRing.style.transform = `rotateY(${angle}deg)`;
-      orbitPositions.forEach((position) => {
-        position.style.setProperty("--orbit-counter", `${-angle}deg`);
-      });
-    };
-
-    const animateOrbit = (time) => {
-      if (!isInView) {
-        animationFrame = 0;
-        return;
-      }
-      if (lastFrameTime === null) lastFrameTime = time;
-      const elapsed = Math.min(time - lastFrameTime, 80);
-      lastFrameTime = time;
-
-      const hasPointerOrKeyboardFocus =
-        orbitCards.some((card) => card.matches(":hover") || card === document.activeElement) ||
-        Boolean(orbitToggle?.matches(":hover, :focus-visible"));
-      const targetSpeed = isPaused ? 0 : baseSpeed * (hasPointerOrKeyboardFocus ? 0.22 : 1);
-      velocity += (targetSpeed - velocity) * (1 - Math.exp(-elapsed / 520));
-      angle = (angle + velocity * elapsed) % 360;
-      paintOrbit();
-      animationFrame = window.requestAnimationFrame(animateOrbit);
-    };
-
-    paintOrbit();
-    orbitToggle?.addEventListener("click", () => {
-      isPaused = !isPaused;
-      orbitToggle.setAttribute("aria-pressed", String(isPaused));
-      orbitToggle.querySelector("[data-orbit-toggle-label]").textContent = isPaused ? "Resume motion" : "Pause motion";
-      orbitToggle.querySelector("[data-orbit-toggle-icon]").textContent = isPaused ? "▶" : "Ⅱ";
+    homeGallerySlides.forEach((slide, index) => {
+      let offset = index - activeHomeGalleryIndex;
+      if (offset > total / 2) offset -= total;
+      else if (offset < -total / 2) offset += total;
+      const distance = Math.abs(offset);
+      slide.style.setProperty("--gallery-x", `${offset * spacing}px`);
+      slide.style.setProperty("--gallery-rotation", `${-offset * 34}deg`);
+      slide.style.setProperty("--gallery-scale", String(Math.max(0.76, 1 - distance * 0.12)));
+      slide.style.zIndex = String(10 - distance);
+      slide.style.opacity = distance > 2 ? "0" : "1";
+      slide.style.pointerEvents = distance > 2 ? "none" : "";
+      slide.setAttribute("aria-current", String(index === activeHomeGalleryIndex));
     });
 
-    const orbitObserver = new IntersectionObserver(([entry]) => {
-      isInView = entry.isIntersecting;
-      if (isInView && !animationFrame) {
-        lastFrameTime = null;
-        animationFrame = window.requestAnimationFrame(animateOrbit);
-      } else if (!isInView && animationFrame) {
-        window.cancelAnimationFrame(animationFrame);
-        animationFrame = 0;
-        lastFrameTime = null;
+    homeGalleryDots.forEach((dot, index) => {
+      const active = index === activeHomeGalleryIndex;
+      dot.classList.toggle("is-active", active);
+      if (active) dot.setAttribute("aria-current", "true");
+      else dot.removeAttribute("aria-current");
+    });
+    if (homeGalleryStatus) {
+      homeGalleryStatus.textContent = `Photo ${activeHomeGalleryIndex + 1} of ${total}`;
+    }
+  };
+
+  const setHomeGallerySlide = (index) => {
+    const total = homeGallerySlides.length;
+    if (!total) return;
+    activeHomeGalleryIndex = ((index % total) + total) % total;
+    paintHomeGallery();
+  };
+
+  if (homeGallery && homeGalleryStage && homeGallerySlides.length) {
+    paintHomeGallery();
+    homeGalleryDots.forEach((dot, index) => {
+      dot.addEventListener("click", () => setHomeGallerySlide(index));
+    });
+    homeGallery.querySelector("[data-gallery-previous]")?.addEventListener("click", () => {
+      setHomeGallerySlide(activeHomeGalleryIndex - 1);
+    });
+    homeGallery.querySelector("[data-gallery-next]")?.addEventListener("click", () => {
+      setHomeGallerySlide(activeHomeGalleryIndex + 1);
+    });
+    homeGalleryStage.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") setHomeGallerySlide(activeHomeGalleryIndex - 1);
+      else if (event.key === "ArrowRight") setHomeGallerySlide(activeHomeGalleryIndex + 1);
+      else return;
+      event.preventDefault();
+    });
+
+    let pointerStart = null;
+    homeGalleryStage.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      pointerStart = { id: event.pointerId, x: event.clientX, moved: false };
+    });
+    homeGalleryStage.addEventListener("pointermove", (event) => {
+      if (!pointerStart || pointerStart.id !== event.pointerId) return;
+      if (!pointerStart.moved && Math.abs(event.clientX - pointerStart.x) >= 12) {
+        pointerStart.moved = true;
+        homeGalleryStage.setPointerCapture(event.pointerId);
+        homeGalleryStage.classList.add("is-dragging");
       }
-    }, { threshold: 0.05 });
-    orbitObserver.observe(orbitStage);
+    });
+    homeGalleryStage.addEventListener("pointerup", (event) => {
+      if (!pointerStart || pointerStart.id !== event.pointerId) return;
+      const delta = event.clientX - pointerStart.x;
+      const moved = pointerStart.moved;
+      pointerStart = null;
+      homeGalleryStage.classList.remove("is-dragging");
+      if (moved && Math.abs(delta) >= 48) {
+        setHomeGallerySlide(activeHomeGalleryIndex + (delta < 0 ? 1 : -1));
+      }
+    });
+    homeGalleryStage.addEventListener("pointercancel", () => {
+      pointerStart = null;
+      homeGalleryStage.classList.remove("is-dragging");
+    });
+    window.addEventListener("resize", paintHomeGallery);
   }
 
   const orbitLightbox = document.querySelector("[data-orbit-lightbox]");
@@ -154,8 +183,12 @@ document.addEventListener("DOMContentLoaded", () => {
     orbitLightbox.classList.remove("is-entering");
     orbitLightbox.close();
   };
-  orbitCards.forEach((card) => {
+  orbitCards.forEach((card, index) => {
     card.addEventListener("click", () => {
+      if (index !== activeHomeGalleryIndex) {
+        setHomeGallerySlide(index);
+        return;
+      }
       const image = card.querySelector("img");
       const title = card.querySelector(".orbit-card-title");
       if (!orbitLightbox || !image || !title || !orbitLightboxTitle || !orbitLightboxDescription || !orbitLightboxImage) return;

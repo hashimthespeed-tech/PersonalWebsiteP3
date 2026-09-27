@@ -1,10 +1,10 @@
 ---
-name: Orbit gallery 3D interaction
-description: Interaction and image-loading constraints for the rotating perspective gallery.
+name: Image carousel interaction
+description: Image loading, 3D stacking, and pointer gesture constraints for interactive galleries.
 ---
 
-The gallery uses a small set of cards positioned in a 3D ring. Rear cards are naturally occluded until they rotate into the front; do not raise a hovered `.orbit-position` with `z-index`, because changing the 3D stacking order made pointer hit-testing unstable. Keep the small gallery image set eagerly loaded so every card is ready when it rotates into view. For stages containing linked cards, do not capture the pointer on pointer-down: capture retargets the click to the stage and breaks link navigation. Track movement first and capture only after the pointer crosses a drag threshold.
+For small sets of transformed gallery photos, eagerly load every image and mark photos `draggable="false"` so native image dragging cannot take over a horizontal gesture. Track pointer movement and capture only after the drag threshold; early capture retargets ordinary clicks. In a true 3D ring, do not raise a hovered card's container with `z-index`, because changing 3D stacking can destabilize hit-testing.
 
-**Why:** CSS 3D paint order and pointer hit-testing are coupled, lazy-loading heuristics are unreliable for absolute transformed cards, and pointer capture can prevent native anchor clicks.
+**Why:** Lazy-loading absolute cards can leave photos blank when they become visible; native image dragging can dispatch `pointercancel`; early pointer capture can swallow clicks; and CSS 3D stacking affects hit-testing.
 
-**How to apply:** Use per-card hover and keyboard-focus states, slow the ring while a card is active, capture only after a drag threshold, and test every card's click target as it reaches the front of the ring in a browser that supports CSS 3D transforms.
+**How to apply:** Eager-load small transformed galleries, disable native image dragging, and capture only after an intentional swipe threshold. Test both photo clicks and pointer gestures in a browser; for 3D rings, verify stacking and hit-testing as cards move.

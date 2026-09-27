@@ -1,5 +1,5 @@
 - [WebGL preview verification](webgl-preview.md) — app screenshots may show only the CSS fallback or black; verify procedural shaders in a WebGL-capable browser.
 - [Viewport-sized shader backgrounds](viewport-shader-backgrounds.md) — Keep long-page shader canvases viewport-sized so their color fields stay visible while scrolling.
 - [Public image metadata](public-image-metadata.md) — Strip EXIF/GPS from uploaded photos before using them in public site assets.
-- [Orbit gallery 3D interaction](orbit-gallery-3d-interaction.md) — Preserve 3D hit-testing, eager-load small image sets, and delay pointer capture so links still click.
+- [Image carousel interaction](orbit-gallery-3d-interaction.md) — Eager-load small photo sets, disable native image drag, and capture only after a deliberate swipe.
 - [Vite IIFE browser builds](vite-iife-build.md) — Check dependency output for Node-only process references; define NODE_ENV explicitly when bundling browser libraries.
