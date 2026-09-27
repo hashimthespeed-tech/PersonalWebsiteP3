@@ -280,6 +280,7 @@ body.media-gallery-page .media-scroll-instructions {
 body.media-gallery-page .media-scroll-fallback {
   align-content: center;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding-top: clamp(68px, 10vh, 88px);
   width: 100%;
 }
 
