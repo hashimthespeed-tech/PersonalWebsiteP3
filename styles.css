@@ -1990,6 +1990,12 @@ body::before {
   position: fixed;
   z-index: -1;
 }
+body[data-page="home"]::before {
+  background:
+    radial-gradient(ellipse 58% 62% at 16% 22%, rgba(188, 132, 37, .075), transparent 72%),
+    radial-gradient(ellipse 54% 64% at 84% 78%, rgba(25, 54, 94, .05), transparent 74%),
+    linear-gradient(135deg, rgba(255, 255, 255, .045), transparent 54%, rgba(188, 132, 37, .025));
+}
 .home-rest { background: transparent; }
 .home-intro {
   background: transparent;

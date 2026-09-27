@@ -65,8 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     : [];
   let activeHomeGalleryIndex = 0;
   let homeGalleryAutoplayPaused = reducedMotion;
-  let homeGalleryPointerInside = false;
-  let homeGalleryHasFocus = false;
   let homeGalleryPointerActive = false;
   let homeGalleryIsVisible = !("IntersectionObserver" in window);
   let homeGalleryAutoplayTimer = null;
@@ -89,8 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const shouldRun = Boolean(
       homeGallery &&
       !homeGalleryAutoplayPaused &&
-      !homeGalleryPointerInside &&
-      !homeGalleryHasFocus &&
       !homeGalleryPointerActive &&
       homeGalleryIsVisible &&
       !homeGalleryLightboxOpen &&
@@ -166,25 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     paintHomeGalleryAutoplayToggle();
 
-    homeGallery.addEventListener("pointerenter", (event) => {
-      if (event.pointerType !== "mouse") return;
-      homeGalleryPointerInside = true;
-      syncHomeGalleryAutoplay();
-    });
-    homeGallery.addEventListener("pointerleave", (event) => {
-      if (event.pointerType !== "mouse") return;
-      homeGalleryPointerInside = false;
-      syncHomeGalleryAutoplay();
-    });
-    homeGallery.addEventListener("focusin", () => {
-      homeGalleryHasFocus = true;
-      syncHomeGalleryAutoplay();
-    });
-    homeGallery.addEventListener("focusout", (event) => {
-      if (homeGallery.contains(event.relatedTarget)) return;
-      homeGalleryHasFocus = false;
-      syncHomeGalleryAutoplay();
-    });
     document.addEventListener("visibilitychange", syncHomeGalleryAutoplay);
     if ("IntersectionObserver" in window) {
       const homeGalleryVisibilityObserver = new IntersectionObserver(([entry]) => {
