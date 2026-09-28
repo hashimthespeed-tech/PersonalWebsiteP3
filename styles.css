@@ -2478,6 +2478,14 @@ body.travel-page .travel-places-photos img {
   width: 100%;
 }
 
+body.travel-page .travel-places-photos figure:first-child img {
+  object-position: center top;
+}
+
+body.travel-page .travel-places-photos figure:nth-child(2) img {
+  object-position: center bottom;
+}
+
 body.travel-page .travel-places-photos figcaption {
   background: linear-gradient(180deg, transparent, rgba(8, 12, 19, .75));
   bottom: 0;
