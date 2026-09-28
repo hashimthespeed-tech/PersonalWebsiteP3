@@ -9,11 +9,13 @@
   --yellow: #e7c274;
   --line: rgba(23, 43, 76, .17);
   --shadow: 0 18px 48px rgba(16, 38, 74, .16);
-  --serif: "Playfair Display", Georgia, serif;
-  --sans: "DM Sans", "Trebuchet MS", sans-serif;
+  --site-font: "Inter", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --serif: var(--site-font);
+  --sans: var(--site-font);
 }
 
 * { box-sizing: border-box; }
+body, button, input, select, textarea { font-family: var(--site-font); }
 html { background: var(--paper); scroll-behavior: smooth; }
 body {
   background: var(--paper);
