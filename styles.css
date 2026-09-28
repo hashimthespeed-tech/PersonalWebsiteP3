@@ -2420,3 +2420,89 @@ body .home-orbit-gallery .orbit-gallery-heading h2 {
   letter-spacing: -.045em;
   line-height: 1.08;
 }
+
+/* Keep the travel story compact, with spacing closer to the Business timeline. */
+body.travel-page main > .section {
+  padding-block: 52px;
+}
+
+body.travel-page main > .sage-band {
+  padding-top: 36px;
+}
+
+body.travel-page .feature-split {
+  align-items: start;
+  gap: clamp(24px, 4.2vw, 58px);
+}
+
+body.travel-page .feature-split h1 {
+  font-size: clamp(2.7rem, 4.5vw, 3.8rem);
+  line-height: 1.02;
+  margin: 0 0 14px;
+}
+
+body.travel-page .section-header {
+  padding-bottom: 18px;
+}
+
+body.travel-page .mini-grid {
+  gap: 0 18px;
+  margin-top: 20px;
+}
+
+body.travel-page .story-grid {
+  gap: clamp(24px, 4.3vw, 56px);
+}
+
+body.travel-page .story-copy p {
+  line-height: 1.7;
+}
+
+body.travel-page .story-copy p + p {
+  margin-top: 14px;
+}
+
+body.travel-page .travel-photo-grid {
+  gap: 16px;
+  margin-top: 22px;
+}
+
+body.travel-page .travel-photo figcaption {
+  padding: 10px 0 12px;
+}
+
+@media (max-width: 620px) {
+  body.travel-page main > .sage-band {
+    padding-top: 26px;
+  }
+
+  body.travel-page .feature-split h1 {
+    font-size: clamp(2.25rem, 10vw, 3.8rem);
+  }
+
+  body.travel-page main > .section {
+    padding-block: 36px;
+  }
+
+  body.travel-page .section-header {
+    gap: 12px;
+    padding-bottom: 14px;
+  }
+
+  body.travel-page .mini-grid {
+    margin-top: 12px;
+  }
+
+  body.travel-page .feature-split {
+    gap: 22px;
+  }
+
+  body.travel-page .story-grid {
+    gap: 18px;
+  }
+
+  body.travel-page .travel-photo-grid {
+    gap: 14px;
+    margin-top: 16px;
+  }
+}
