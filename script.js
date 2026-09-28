@@ -295,6 +295,28 @@ document.addEventListener("DOMContentLoaded", () => {
     syncHomeGalleryAutoplay();
   });
 
+  const businessLightbox = document.querySelector("[data-business-lightbox]");
+  const businessLightboxImage = businessLightbox?.querySelector("[data-business-lightbox-image]");
+  const businessLightboxTitle = businessLightbox?.querySelector("[data-business-lightbox-title]");
+  document.querySelectorAll("[data-business-lightbox-open]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!businessLightbox || !businessLightboxImage || !businessLightboxTitle) return;
+      event.preventDefault();
+      const thumbnail = link.querySelector("img");
+      businessLightboxImage.src = link.href;
+      businessLightboxImage.alt = thumbnail?.alt || "";
+      businessLightboxTitle.textContent =
+        link.dataset.businessLightboxTitle || thumbnail?.alt || "Business photo";
+      if (!businessLightbox.open) businessLightbox.showModal();
+    });
+  });
+  businessLightbox?.querySelector("[data-business-lightbox-close]")?.addEventListener("click", () => {
+    businessLightbox.close();
+  });
+  businessLightbox?.addEventListener("click", (event) => {
+    if (event.target === businessLightbox) businessLightbox.close();
+  });
+
   const revealSections = document.querySelectorAll(
     "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card, .income-stream, .business-milestone, .media-placeholder"
   );
