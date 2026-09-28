@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./_group.css";
 import "./FutureRedesign.css";
 
@@ -10,6 +10,49 @@ const navigation = [
   ["Business", "#business"],
   ["Admin", "#admin"],
 ];
+
+type MediaSlotProps = { scene: string; index: string; label: string };
+
+function useScrollReveal(rootSelector: string) {
+  useEffect(() => {
+    const root = document.querySelector<HTMLElement>(rootSelector);
+    if (!root) return;
+    root.classList.add("scroll-ready");
+    const targets = Array.from(root.querySelectorAll<HTMLElement>(".reveal-on-scroll"));
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return () => root.classList.remove("scroll-ready");
+    }
+    const observer = new IntersectionObserver((entries, currentObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          currentObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    targets.forEach((target) => observer.observe(target));
+    return () => {
+      observer.disconnect();
+      root.classList.remove("scroll-ready");
+    };
+  }, [rootSelector]);
+}
+
+function MediaPlaceholder({ scene, index, label }: MediaSlotProps) {
+  return (
+    <figure
+      className="media-placeholder reveal-on-scroll"
+      data-scene={scene}
+      aria-label={`Photo or video placeholder for ${label}`}
+    >
+      <span className="media-placeholder-orbit" aria-hidden="true" />
+      <span className="media-placeholder-mark" aria-hidden="true">+</span>
+      <figcaption><span>{index} · photo or video</span><span>{label}</span></figcaption>
+    </figure>
+  );
+}
 
 function PreviewHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -45,41 +88,32 @@ function PreviewHeader() {
 }
 
 export function FutureRedesign() {
+  useScrollReveal(".future-preview");
+  const streams = [
+    { number: "01", label: "Real estate", scene: "property" },
+    { number: "02", label: "Stocks", scene: "stocks" },
+    { number: "03", label: "Business", scene: "business" },
+  ];
   return (
     <div className="future-preview" id="top">
       <PreviewHeader />
       <main>
-        <section className="home-hero future-hero" aria-labelledby="future-preview-title">
-          <div className="hero-grid future-hero-grid">
-            <div className="hero-copy future-hero-copy">
-              <p className="eyebrow">Looking ahead</p>
-              <h1 className="hero-title" id="future-preview-title">
-                <span className="title-line">My</span>
-                <span className="title-line title-accent">Future</span>
-              </h1>
-              <p className="hero-statement">Learning, building, and making room to grow.</p>
-            </div>
-            <figure className="hero-portrait future-portrait">
-              <img src="/__mockup/images/san-francisco-buildings.webp" alt="San Francisco buildings under a bright coastal sky" />
-              <figcaption>San Francisco · on the horizon</figcaption>
-            </figure>
-          </div>
-          <a className="scroll-cue" href="#future-goal">Scroll to explore ↓</a>
-        </section>
-
         <section className="future-goal-section" id="future-goal" aria-labelledby="future-goal-title">
           <div className="future-goal-inner">
-            <div className="future-goal-heading">
+            <header className="future-page-heading reveal-on-scroll">
               <div>
-                <span className="eyebrow">Long-term goal</span>
-                <h2 id="future-goal-title">$20,000 <span>/ month</span></h2>
+                <span className="eyebrow">Future · long-term goal</span>
+                <h1 id="future-goal-title">$20,000 <span>/ month</span></h1>
               </div>
-              <span className="future-goal-note">Passive income · a goal, not current income</span>
-            </div>
+              <div className="future-goal-meta"><span>Passive income</span><span>A goal, not current income</span></div>
+            </header>
             <div className="income-streams" aria-label="Planned income streams">
-              <article className="income-stream"><span className="stream-number">01</span><h3>Real estate</h3></article>
-              <article className="income-stream"><span className="stream-number">02</span><h3>Stocks</h3></article>
-              <article className="income-stream"><span className="stream-number">03</span><h3>Business</h3></article>
+              {streams.map((stream) => (
+                <article className="income-stream reveal-on-scroll" key={stream.number}>
+                  <MediaPlaceholder scene={stream.scene} index={stream.number} label={stream.label} />
+                  <div className="stream-copy"><span className="stream-number">{stream.number}</span><h2>{stream.label}</h2></div>
+                </article>
+              ))}
             </div>
           </div>
         </section>

@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const revealSections = document.querySelectorAll(
-    "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card"
+    "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card, .income-stream, .business-milestone, .media-placeholder"
   );
   if (reducedMotion || !("IntersectionObserver" in window)) {
     revealSections.forEach((section) => section.classList.add("is-visible"));
