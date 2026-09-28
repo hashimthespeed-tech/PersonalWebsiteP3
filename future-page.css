@@ -89,6 +89,34 @@
   min-height: 188px;
 }
 
+.income-stream .media-placeholder.future-photo {
+  background: #12243d;
+  overflow: hidden;
+}
+
+.income-stream .media-placeholder.future-photo::before,
+.income-stream .media-placeholder.future-photo::after {
+  content: none;
+  display: none;
+}
+
+.income-stream .future-photo img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+  width: 100%;
+}
+
+.income-stream:hover .future-photo img { transform: scale(1.035); }
+
+.income-stream .future-photo figcaption {
+  background: linear-gradient(180deg, transparent, rgba(7, 18, 33, .88));
+  color: #fff;
+  padding-top: 36px;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, .5);
+}
+
 .stream-copy {
   align-items: baseline;
   display: flex;
