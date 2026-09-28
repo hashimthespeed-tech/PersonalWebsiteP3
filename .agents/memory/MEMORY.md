@@ -3,3 +3,4 @@
 - [Public image metadata](public-image-metadata.md) — Strip EXIF/GPS from uploaded photos before using them in public site assets.
 - [Image carousel interaction](orbit-gallery-3d-interaction.md) — Eager-load small photo sets, disable native image drag, and capture only after a deliberate swipe.
 - [Vite IIFE browser builds](vite-iife-build.md) — Check dependency output for Node-only process references; define NODE_ENV explicitly when bundling browser libraries.
+- [Dev preview routing](preview-port-routing.md) — A bare dev hostname can be unconfigured while mapped webview and canvas routes still work.
