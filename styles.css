@@ -700,18 +700,38 @@ p { color: var(--muted); }
 .future-page .media-placeholder[data-scene="business"], .business-page .media-placeholder[data-scene="next"] { --slot-a: #1e4e58; --slot-b: #b77d39; --slot-glow: rgba(235, 218, 166, .4); }
 .business-page .media-placeholder[data-scene="gaming"] { --slot-a: #334567; --slot-b: #819ac1; --slot-glow: rgba(240, 229, 200, .42); }
 .business-page .media-placeholder[data-scene="local-work"] { --slot-a: #34625f; --slot-b: #c19453; --slot-glow: rgba(235, 224, 183, .44); }
-.business-page .media-placeholder.channel-photo {
+.business-page .media-placeholder.business-photo,
+.business-page .media-placeholder.business-products {
   aspect-ratio: auto;
   background: #fff;
-  display: block;
   min-height: 0;
 }
-.business-page .media-placeholder.channel-photo::before,
-.business-page .media-placeholder.channel-photo::after { content: none; display: none; }
-.business-page .channel-photo-link { display: block; line-height: 0; }
-.business-page .channel-photo-link img { height: auto; width: 100%; }
-.business-page .channel-photo-link:focus-visible { outline: 3px solid var(--rust); outline-offset: -3px; }
-.business-page .media-placeholder.channel-photo figcaption {
+.business-page .media-placeholder.business-photo {
+  display: block;
+}
+.business-page .media-placeholder.business-photo::before,
+.business-page .media-placeholder.business-photo::after,
+.business-page .media-placeholder.business-products::before,
+.business-page .media-placeholder.business-products::after { content: none; display: none; }
+.business-page .business-photo-link { display: block; line-height: 0; }
+.business-page .business-photo-link img { height: auto; width: 100%; }
+.business-page .business-photo-link:focus-visible { outline: 3px solid var(--rust); outline-offset: -3px; }
+.business-page .media-placeholder.business-products {
+  align-items: stretch;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 8px;
+}
+.business-page .business-products > img {
+  aspect-ratio: 3 / 4;
+  background: #eeece6;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+.business-page .media-placeholder.business-photo figcaption,
+.business-page .media-placeholder.business-products figcaption {
   background: #fff;
   border-top: 1px solid var(--line);
   bottom: auto;
@@ -722,6 +742,7 @@ p { color: var(--muted); }
   right: auto;
   text-shadow: none;
 }
+.business-page .media-placeholder.business-products figcaption { grid-column: 1 / -1; }
 .future-page .media-placeholder::before, .business-page .media-placeholder::before {
   border: 1px solid rgba(255, 255, 255, .45);
   border-radius: 50%;
