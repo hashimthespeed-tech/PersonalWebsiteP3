@@ -314,3 +314,91 @@
   .business-product-cases,
   .business-detailing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+.business-page .business-next-photo {
+  aspect-ratio: 1732 / 916;
+  background: #090b10;
+  min-height: 0;
+}
+
+.business-page .business-next-photo::before {
+  content: none;
+  display: none;
+}
+
+.business-page .business-next-photo::after { pointer-events: none; z-index: 0; }
+
+.business-page .business-next-photo img {
+  background: #090b10;
+  height: 100%;
+  inset: 0;
+  object-fit: contain;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+.business-page .business-next-photo figcaption {
+  background: rgba(9, 11, 16, .78);
+  bottom: 12px;
+  left: auto;
+  padding: 7px 10px;
+  right: 12px;
+  text-shadow: none;
+  z-index: 2;
+}
+
+.business-page .business-gallery-link {
+  isolation: isolate;
+  position: relative;
+}
+
+.business-page .business-gallery-link::after {
+  background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, .42) 48%, transparent 70%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-130%);
+  z-index: 1;
+}
+
+.business-page .business-gallery-link > span {
+  position: relative;
+  z-index: 2;
+}
+
+.business-page .business-products.is-visible .business-gallery-link::after,
+.business-page .business-work-gallery.is-visible .business-gallery-link::after {
+  animation: business-card-sweep .95s .12s ease-out both;
+}
+
+.business-page .business-products.is-visible .business-product-cases .business-gallery-link:nth-child(2)::after,
+.business-page .business-products.is-visible .business-product-process .business-gallery-link:nth-child(2)::after,
+.business-page .business-work-gallery.is-visible .business-bin-comparison .business-gallery-link:nth-child(2)::after {
+  animation-delay: .22s;
+}
+
+.business-page .business-work-gallery.is-visible .business-detailing-grid .business-gallery-link:nth-child(2)::after {
+  animation-delay: .22s;
+}
+
+.business-page .business-work-gallery.is-visible .business-detailing-grid .business-gallery-link:nth-child(3)::after {
+  animation-delay: .32s;
+}
+
+@keyframes business-card-sweep {
+  to { transform: translateX(130%); }
+}
+
+.has-js .business-next-photo img,
+.has-js .business-gallery-link img {
+  clip-path: inset(7% 5%);
+  transition: clip-path .8s cubic-bezier(.2, .7, .25, 1), transform .45s ease;
+}
+
+.has-js .business-next-photo.is-visible img,
+.has-js .business-products.is-visible .business-gallery-link img,
+.has-js .business-work-gallery.is-visible .business-gallery-link img {
+  clip-path: inset(0);
+}

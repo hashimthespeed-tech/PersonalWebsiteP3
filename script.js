@@ -317,23 +317,47 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target === businessLightbox) businessLightbox.close();
   });
 
-  const revealSections = document.querySelectorAll(
+  const revealSelector =
     "main > section:not(.home-hero), main > .home-rest > section, .hero-portrait, .media-card, .mini-card, .feature-art, .timeline-item, .accent-card, .income-stream, .business-milestone, .media-placeholder"
-  );
-  if (reducedMotion || !("IntersectionObserver" in window)) {
-    revealSections.forEach((section) => section.classList.add("is-visible"));
-  } else {
-    revealSections.forEach((section) => section.setAttribute("data-reveal", ""));
-    const revealObserver = new IntersectionObserver((entries, observer) => {
+  const revealObserver =
+    !reducedMotion && "IntersectionObserver" in window
+      ? new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    revealSections.forEach((section) => revealObserver.observe(section));
-  }
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" })
+      : null;
+  const observedRevealTargets = new WeakSet();
+  const prepareRevealTargets = (root) => {
+    const targets = [];
+    if (root.nodeType === 1 && root.matches(revealSelector)) targets.push(root);
+    if (typeof root.querySelectorAll === "function") {
+      targets.push(...root.querySelectorAll(revealSelector));
+    }
+    targets.forEach((section) => {
+      if (observedRevealTargets.has(section)) return;
+      observedRevealTargets.add(section);
+      if (revealObserver) {
+        section.setAttribute("data-reveal", "");
+        revealObserver.observe(section);
+      } else {
+        section.classList.add("is-visible");
+      }
+    });
+  };
+  prepareRevealTargets(document);
+  const revealMutationObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach(prepareRevealTargets);
+    });
+  });
+  revealMutationObserver.observe(document.querySelector("main") || document.body, {
+    childList: true,
+    subtree: true
+  });
 
   if (!reducedMotion) {
     let ticking = false;
