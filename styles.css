@@ -2460,6 +2460,7 @@ body.travel-page .travel-places-photos {
 }
 
 body.travel-page .travel-places-photos figure {
+  margin: 0;
   min-height: 0;
   overflow: hidden;
   position: relative;
