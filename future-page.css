@@ -61,6 +61,14 @@
   letter-spacing: .03em;
 }
 
+.future-intro {
+  color: var(--muted);
+  font-size: .93rem;
+  line-height: 1.7;
+  margin: 16px 0 0;
+  max-width: 760px;
+}
+
 .income-streams {
   display: grid;
   gap: 18px;
@@ -131,10 +139,13 @@
 }
 
 .stream-copy {
+  padding: 13px 7px 5px;
+}
+
+.stream-heading {
   align-items: baseline;
   display: flex;
   gap: 12px;
-  padding: 13px 7px 3px;
 }
 
 .stream-number {
@@ -152,6 +163,13 @@
   letter-spacing: -.035em;
   line-height: 1.15;
   margin: 0;
+}
+
+.stream-description {
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.55;
+  margin: 7px 0 0 34px;
 }
 
 @media (max-width: 920px) {
@@ -172,4 +190,5 @@
   .income-stream .media-placeholder,
   .income-stream:last-child .media-placeholder { aspect-ratio: 1.62; min-height: 0; }
   .stream-copy { padding-top: 11px; }
+  .stream-description { margin-top: 6px; }
 }

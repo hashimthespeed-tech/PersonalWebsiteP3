@@ -2431,7 +2431,7 @@ body.travel-page main > .sage-band {
 }
 
 body.travel-page .feature-split {
-  align-items: start;
+  align-items: center;
   gap: clamp(24px, 4.2vw, 58px);
 }
 
@@ -2445,13 +2445,55 @@ body.travel-page .section-header {
   padding-bottom: 18px;
 }
 
-body.travel-page .mini-grid {
-  gap: 0 18px;
-  margin-top: 20px;
+body.travel-page .travel-places-grid {
+  align-items: center;
+  display: grid;
+  gap: clamp(24px, 4.3vw, 56px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
-body.travel-page .story-grid {
-  gap: clamp(24px, 4.3vw, 56px);
+body.travel-page .travel-places-photos {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1.05fr .95fr;
+  grid-template-rows: repeat(2, minmax(132px, 1fr));
+}
+
+body.travel-page .travel-places-photos figure {
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+body.travel-page .travel-places-photos figure:first-child {
+  grid-row: 1 / span 2;
+}
+
+body.travel-page .travel-places-photos img {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+body.travel-page .travel-places-photos figcaption {
+  background: linear-gradient(180deg, transparent, rgba(8, 12, 19, .75));
+  bottom: 0;
+  color: #fff;
+  font-size: .72rem;
+  left: 0;
+  letter-spacing: .06em;
+  padding: 30px 12px 10px;
+  position: absolute;
+  right: 0;
+  text-transform: uppercase;
+}
+
+body.travel-page .travel-places-copy h2 {
+  font-size: clamp(2.1rem, 4vw, 3.7rem);
+  line-height: .98;
+  margin: 0 0 18px;
 }
 
 body.travel-page .story-copy p {
@@ -2489,16 +2531,22 @@ body.travel-page .travel-photo figcaption {
     padding-bottom: 14px;
   }
 
-  body.travel-page .mini-grid {
-    margin-top: 12px;
-  }
-
   body.travel-page .feature-split {
     gap: 22px;
   }
 
-  body.travel-page .story-grid {
+  body.travel-page .travel-places-grid {
+    grid-template-columns: 1fr;
     gap: 18px;
+  }
+
+  body.travel-page .travel-places-photos {
+    grid-template-rows: repeat(2, minmax(110px, 1fr));
+  }
+
+  body.travel-page .travel-places-copy h2 {
+    font-size: clamp(2.4rem, 10vw, 3.7rem);
+    margin-bottom: 14px;
   }
 
   body.travel-page .travel-photo-grid {
